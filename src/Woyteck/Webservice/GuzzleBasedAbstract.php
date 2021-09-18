@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Woyteck\Db\ModelFactory;
-use Woyteck\StoresManager\Model\WebservicesLog;
 
 abstract class GuzzleBasedAbstract
 {
@@ -50,7 +49,6 @@ abstract class GuzzleBasedAbstract
             $response->getBody()->rewind();
             $this->lastResponseHeaders = $this->parseHeaders($response->getHeaders());
             $this->lastResponse = $contents;
-            $this->saveLog();
 
             return $response;
         } catch (ServerException $e) {
@@ -58,7 +56,6 @@ abstract class GuzzleBasedAbstract
             $this->lastRequestHeaders = $this->parseHeaders($e->getRequest()->getHeaders());
             $this->lastResponse = $e->getResponse()->getBody()->getContents();
             $this->lastResponseHeaders = $this->parseHeaders($e->getResponse()->getHeaders());
-            $this->saveLog();
 
             throw $e;
         }
@@ -81,28 +78,5 @@ abstract class GuzzleBasedAbstract
         }
 
         return $output;
-    }
-
-    private function saveLog(): WebservicesLog
-    {
-        /** @var WebservicesLog $log */
-        $log = $this->modelFactory->create(WebservicesLog::class);
-        $log->webservice = get_class($this);
-        $log->datetime = time();
-        $log->request_headers = $this->lastRequestHeaders;
-        if (ctype_print($this->lastRequest) === true) {
-            $log->request = $this->lastRequest;
-        } else {
-            $log->request = 'binary_data';
-        }
-        $log->response_headers = $this->lastResponseHeaders;
-        if (ctype_print($this->lastResponse) === true) {
-            $log->response = $this->lastResponse;
-        } else {
-            $log->response = 'binary_data';
-        }
-        $log->save();
-
-        return $log;
     }
 }
