@@ -36,28 +36,28 @@ use Woyteck\Webservice\GuzzleBasedAbstract;
 
 class WsPrestashop extends GuzzleBasedAbstract
 {
-    public const RESOURCE_CATEGORIES = 'categories';
-    public const RESOURCE_PRODUCTS = 'products';
-    public const RESOURCE_COMBINATIONS = 'combinations';
-    public const RESOURCE_PRODUCT_IMAGES = 'images/products';
-    public const RESOURCE_PRODUCT_FEATURES = 'product_features';
-    public const RESOURCE_PRODUCT_FEATURE_VALUES = 'product_feature_values';
-    public const RESOURCE_PRODUCT_OPTIONS = 'product_options';
-    public const RESOURCE_PRODUCT_OPTION_VALUES = 'product_option_values';
-    public const RESOURCE_STOCK_AVAILABLES = 'stock_availables';
-    public const RESOURCE_MANUFACTURERS = 'manufacturers';
-    public const RESOURCE_ORDERS = 'orders';
-    public const RESOURCE_BL_ORDERS = 'orders';
-    public const RESOURCE_ORDER_CARRIERS = 'order_carriers';
-    public const RESOURCE_CUSTOMERS = 'customers';
-    public const RESOURCE_ADDRESSES = 'addresses';
-    public const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
-    public const RESOURCE_MESSAGES = 'messages';
-    public const RESOURCE_TAXES = 'taxes';
-    public const RESOURCE_TAX_RULES = 'tax_rules';
-    public const RESOURCE_TAX_RULE_GROUPS = 'tax_rule_groups';
-    public const RESOURCE_COUNTRIES = 'countries';
-    public const RESOURCE_TAGS = 'tags';
+    private const RESOURCE_CATEGORIES = 'categories';
+    private const RESOURCE_PRODUCTS = 'products';
+    private const RESOURCE_COMBINATIONS = 'combinations';
+    private const RESOURCE_PRODUCT_IMAGES = 'images/products';
+    private const RESOURCE_PRODUCT_FEATURES = 'product_features';
+    private const RESOURCE_PRODUCT_FEATURE_VALUES = 'product_feature_values';
+    private const RESOURCE_PRODUCT_OPTIONS = 'product_options';
+    private const RESOURCE_PRODUCT_OPTION_VALUES = 'product_option_values';
+    private const RESOURCE_STOCK_AVAILABLES = 'stock_availables';
+    private const RESOURCE_MANUFACTURERS = 'manufacturers';
+    private const RESOURCE_ORDERS = 'orders';
+    private const RESOURCE_BL_ORDERS = 'orders';
+    private const RESOURCE_ORDER_CARRIERS = 'order_carriers';
+    private const RESOURCE_CUSTOMERS = 'customers';
+    private const RESOURCE_ADDRESSES = 'addresses';
+    private const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
+    private const RESOURCE_MESSAGES = 'messages';
+    private const RESOURCE_TAXES = 'taxes';
+    private const RESOURCE_TAX_RULES = 'tax_rules';
+    private const RESOURCE_TAX_RULE_GROUPS = 'tax_rule_groups';
+    private const RESOURCE_COUNTRIES = 'countries';
+    private const RESOURCE_TAGS = 'tags';
 
     private const SINGLE = [
         self::RESOURCE_CATEGORIES => 'category',
@@ -111,7 +111,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     ];
 
     /** @var string */
-    private $httpSchema;
+    private $httpScheme;
 
     /** @var string */
     private $url;
@@ -119,11 +119,11 @@ class WsPrestashop extends GuzzleBasedAbstract
     /** @var string */
     private $key;
 
-    public function __construct(Client $client, ModelFactory $modelFactory, string $httpSchema, string $url, string $key)
+    public function __construct(Client $client, ModelFactory $modelFactory, string $httpScheme, string $url, string $key)
     {
         parent::__construct($client, $modelFactory);
 
-        $this->httpSchema = $httpSchema;
+        $this->httpScheme = $httpScheme;
         $this->url = $url;
         $this->key = $key;
     }
@@ -896,7 +896,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function constructUrl(string $resource, int $id = null): string
     {
-        $url = $this->httpSchema . '://' . $this->key . '@' . $this->url . '/' . $resource;
+        $url = $this->httpScheme . '://' . $this->key . '@' . $this->url . '/' . $resource;
 
         if ($id !== null) {
             $url .= '/' . $id;
