@@ -658,7 +658,17 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResources(self::RESOURCE_PRODUCT_FEATURE_VALUES, $filters);
     }
 
-    public function getProductFeatureValue(int $featureId, string $value): ?ProductFeatureValue
+    /**
+     * @param int $id
+     * @return ModelInterface|ProductFeatureValue|null
+     */
+    public function getProductFeatureValue(int $id): ?ProductFeatureValue
+    {
+        return $this->getResource(self::RESOURCE_PRODUCT_FEATURE_VALUES, $id);
+    }
+
+
+    public function getProductFeatureValueByName(int $featureId, string $value): ?ProductFeatureValue
     {
         $values = $this->getProductFeatureValues(['id_feature' => $featureId, 'value' => $value]);
         if (count($values) > 0) {
