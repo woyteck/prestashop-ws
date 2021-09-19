@@ -667,6 +667,15 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResource(self::RESOURCE_PRODUCT_FEATURE_VALUES, $id);
     }
 
+    /**
+     * @param ProductFeatureValue $productFeatureValue
+     * @return ModelInterface
+     * @throws WsException
+     */
+    public function updateProductFeatureValue(ProductFeatureValue $productFeatureValue): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_PRODUCT_FEATURE_VALUES, $productFeatureValue);
+    }
 
     public function getProductFeatureValueByName(int $featureId, string $value): ?ProductFeatureValue
     {
