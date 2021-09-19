@@ -374,6 +374,11 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->updateResource(self::RESOURCE_MANUFACTURERS, $manufacturer);
     }
 
+    public function deleteManufacturer(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_MANUFACTURERS, $id);
+    }
+
     /**
      * @param int $productId
      * @return array|ProductImage
