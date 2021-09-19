@@ -329,7 +329,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
-     * @return array|ModelInterface[]
+     * @return array|ModelInterface[]|Manufacturer[]
      */
     public function getManufacturers(): array
     {
