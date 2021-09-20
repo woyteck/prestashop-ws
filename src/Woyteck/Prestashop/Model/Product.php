@@ -1385,14 +1385,7 @@ class Product implements ModelInterface
                         foreach ($association as $associationItem) {
                             $productFeature = $productFeatures->addChild('product_feature');
                             $productFeature->addChild('id', (string) $associationItem['id']);
-                            if (isset($associationItem['id_feature_value'])) {
-                                $productFeature->addChild('id_feature_value', (string) $associationItem['id_feature_value']);
-                            } else {
-                                $productFeature->addChild('id_feature_value', '0');
-                            }
-                            if (isset($associationItem['custom_value'])) {
-                                $productFeature->addChild('custom_value', (string) $associationItem['custom_value']);
-                            }
+                            $productFeature->addChild('id_feature_value', (string) $associationItem['id_feature_value']);
                         }
                         break;
                     case 'stock_availables':
