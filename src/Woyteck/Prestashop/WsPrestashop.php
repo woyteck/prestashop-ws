@@ -307,6 +307,10 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param StockAvailable $stockAvailable
      * @return ModelInterface|StockAvailable
      * @throws WsException
+     *
+     * @deprecated
+     * This will actually not work, because prestashop doesn't allow it.
+     * Instead stock_available is created automatically after adding a product
      */
     public function addStockAvailable(StockAvailable $stockAvailable): ModelInterface
     {
