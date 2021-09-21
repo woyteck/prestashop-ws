@@ -1370,12 +1370,14 @@ class Product implements ModelInterface
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
                     case 'categories':
-                        if (isset($association['id'])) {
-                            $categories = $xml->product->associations->addChild('categories');
-                            $categories->addAttribute('nodeType', 'category');
-                            $categories->addAttribute('api', 'categories');
+                        $categories = $xml->product->associations->addChild('categories');
+                        $categories->addAttribute('nodeType', 'category');
+                        $categories->addAttribute('api', 'categories');
+                        foreach ($association as $associationItem) {
                             $category = $categories->addChild('category');
-                            $category->addChild('id', (string) $association['id']);
+                            if (isset($associationItem['id'])) {
+                                $category->addChild('id', (string)$associationItem['id']);
+                            }
                         }
                         break;
                     case 'product_features':
@@ -1384,8 +1386,12 @@ class Product implements ModelInterface
                         $productFeatures->addAttribute('api', 'product_features');
                         foreach ($association as $associationItem) {
                             $productFeature = $productFeatures->addChild('product_feature');
-                            $productFeature->addChild('id', (string) $associationItem['id']);
-                            $productFeature->addChild('id_feature_value', (string) $associationItem['id_feature_value']);
+                            if (isset($associationItem['id'])) {
+                                $productFeature->addChild('id', (string) $associationItem['id']);
+                            }
+                            if (isset($associationItem['id_feature_value'])) {
+                                $productFeature->addChild('id_feature_value', (string) $associationItem['id_feature_value']);
+                            }
                         }
                         break;
                     case 'stock_availables':
