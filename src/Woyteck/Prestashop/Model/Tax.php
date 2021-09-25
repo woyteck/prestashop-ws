@@ -149,7 +149,7 @@ class Tax implements ModelInterface
             $xml->tax->deleted = $this->isDeleted() ? '1' : '0';
         }
         if ($this->getName() !== null) {
-            $xml->tax->name = $this->getName();
+            $xml->tax->name->language = $this->getName();
         }
 
         return $xml;
