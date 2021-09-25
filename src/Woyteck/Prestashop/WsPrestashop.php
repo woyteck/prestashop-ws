@@ -469,6 +469,10 @@ class WsPrestashop extends GuzzleBasedAbstract
     private function getProductImageIds(int $productId): array
     {
         $product = $this->getProduct($productId);
+        if ($product === null) {
+            return [];
+        }
+
         $associations = $product->getAssociations();
         $imageIds = [];
         if (is_array($associations) && isset($associations['images'])) {
