@@ -595,6 +595,31 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param Tax $tax
+     * @return ModelInterface|Tax
+     * @throws WsException
+     */
+    public function addTax(Tax $tax): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_TAXES, $tax);
+    }
+
+    /**
+     * @param Tax $tax
+     * @return ModelInterface|Tax
+     * @throws WsException
+     */
+    public function updateTax(Tax $tax): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_TAXES, $tax);
+    }
+
+    public function deleteTax(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_TAXES, $id);
+    }
+
+    /**
      * @param array|null $filters
      * @return array|TaxRule[]
      */
