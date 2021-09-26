@@ -622,13 +622,13 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
-     * @param SpecificPrice $tax
+     * @param SpecificPrice $specificPrice
      * @return ModelInterface|SpecificPrice
      * @throws WsException
      */
-    public function updateSpecificPrice(SpecificPrice $tax): ModelInterface
+    public function updateSpecificPrice(SpecificPrice $specificPrice): ModelInterface
     {
-        return $this->updateResource(self::RESOURCE_SPECIFIC_PRICES, $tax);
+        return $this->updateResource(self::RESOURCE_SPECIFIC_PRICES, $specificPrice);
     }
 
     public function deleteSpecificPrice(int $id): void
