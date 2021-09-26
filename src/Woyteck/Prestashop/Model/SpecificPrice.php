@@ -470,9 +470,13 @@ class SpecificPrice implements ModelInterface
         }
         if ($this->getFrom() !== null) {
             $xml->specific_price->from = $this->getFrom()->format('Y-m-d H:i:s');
+        } else {
+            $xml->specific_price->from = '0000-00-00 00:00:00';
         }
         if ($this->getTo() !== null) {
             $xml->specific_price->to = $this->getTo()->format('Y-m-d H:i:s');
+        } else {
+            $xml->specific_price->to = '0000-00-00 00:00:00';
         }
 
         return $xml;
