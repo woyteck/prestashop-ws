@@ -9,6 +9,9 @@ use stdClass;
 
 class SpecificPrice implements ModelInterface
 {
+    public const TYPE_AMOUNT = 'amount';
+    public const TYPE_PERCENTAGE = 'percentage';
+
     /** @var int */
     private $id;
 
