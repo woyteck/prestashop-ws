@@ -64,7 +64,7 @@ class SpecificPrice implements ModelInterface
     private $to;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -80,7 +80,7 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getIdShop(): ?int
     {
@@ -96,7 +96,7 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getIdShopGroup(): ?int
     {
@@ -112,9 +112,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdCart(): int
+    public function getIdCart(): ?int
     {
         return $this->idCart;
     }
@@ -128,9 +128,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdProduct(): int
+    public function getIdProduct(): ?int
     {
         return $this->idProduct;
     }
@@ -144,9 +144,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdProductAttribute(): int
+    public function getIdProductAttribute(): ?int
     {
         return $this->idProductAttribute;
     }
@@ -160,9 +160,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdCurrency(): int
+    public function getIdCurrency(): ?int
     {
         return $this->idCurrency;
     }
@@ -176,9 +176,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdCountry(): int
+    public function getIdCountry(): ?int
     {
         return $this->idCountry;
     }
@@ -192,9 +192,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdGroup(): int
+    public function getIdGroup(): ?int
     {
         return $this->idGroup;
     }
@@ -208,9 +208,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdCustomer(): int
+    public function getIdCustomer(): ?int
     {
         return $this->idCustomer;
     }
@@ -224,9 +224,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdSpecificPriceRule(): int
+    public function getIdSpecificPriceRule(): ?int
     {
         return $this->idSpecificPriceRule;
     }
@@ -240,9 +240,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -256,9 +256,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getFromQuantity(): int
+    public function getFromQuantity(): ?int
     {
         return $this->fromQuantity;
     }
@@ -272,9 +272,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getReduction(): float
+    public function getReduction(): ?float
     {
         return $this->reduction;
     }
@@ -288,9 +288,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isReductionTax(): bool
+    public function isReductionTax(): ?bool
     {
         return $this->reductionTax;
     }
@@ -304,9 +304,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReductionType(): string
+    public function getReductionType(): ?string
     {
         return $this->reductionType;
     }
@@ -320,9 +320,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getFrom(): DateTime
+    public function getFrom(): ?DateTime
     {
         return $this->from;
     }
@@ -336,9 +336,9 @@ class SpecificPrice implements ModelInterface
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getTo(): DateTime
+    public function getTo(): ?DateTime
     {
         return $this->to;
     }
