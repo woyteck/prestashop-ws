@@ -612,6 +612,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param string $productId
+     * @return ModelInterface|SpecificPrice|null
+     */
+    public function getSpecificPriceByProductId(int $productId): ?ModelInterface
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_PRODUCT_FEATURES, 'id_product', $productId);
+    }
+
+    /**
      * @param SpecificPrice $specificPrice
      * @return ModelInterface|SpecificPrice
      * @throws WsException
