@@ -301,6 +301,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     {
         return $this->getResource(self::RESOURCE_STOCK_AVAILABLES, $id);
     }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|StockAvailable
+     */
+    public function getStockAvailableByProductId(int $productId): ?ModelInterface
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_STOCK_AVAILABLES, 'id_product', (string) $productId);
+    }
     
     public function setStockAvailable(StockAvailable $stockAvailable)
     {
