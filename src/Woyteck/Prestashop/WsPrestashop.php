@@ -617,7 +617,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      */
     public function getSpecificPriceByProductId(int $productId): ?ModelInterface
     {
-        return $this->getResourceByFieldValue(self::RESOURCE_PRODUCT_FEATURES, 'id_product', $productId);
+        return $this->getResourceByFieldValue(self::RESOURCE_PRODUCT_FEATURES, 'id_product', (string) $productId);
     }
 
     /**
