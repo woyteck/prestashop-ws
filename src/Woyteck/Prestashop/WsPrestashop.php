@@ -27,6 +27,7 @@ use Woyteck\Prestashop\Model\ProductFeatureValue;
 use Woyteck\Prestashop\Model\ProductImage;
 use Woyteck\Prestashop\Model\ProductOption;
 use Woyteck\Prestashop\Model\ProductOptionValue;
+use Woyteck\Prestashop\Model\SpecificPrice;
 use Woyteck\Prestashop\Model\StockAvailable;
 use Woyteck\Prestashop\Model\Tag;
 use Woyteck\Prestashop\Model\Tax;
@@ -53,6 +54,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const RESOURCE_ADDRESSES = 'addresses';
     private const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
     private const RESOURCE_MESSAGES = 'messages';
+    private const RESOURCE_SPECIFIC_PRICES = 'specific_prices';
     private const RESOURCE_TAXES = 'taxes';
     private const RESOURCE_TAX_RULES = 'tax_rules';
     private const RESOURCE_TAX_RULE_GROUPS = 'tax_rule_groups';
@@ -77,6 +79,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_ADDRESSES => 'address',
         self::RESOURCE_CUSTOMER_MESSAGES => 'customer_message',
         self::RESOURCE_MESSAGES => 'message',
+        self::RESOURCE_SPECIFIC_PRICES => 'specific_price',
         self::RESOURCE_TAXES => 'tax',
         self::RESOURCE_TAX_RULES => 'tax_rule',
         self::RESOURCE_TAX_RULE_GROUPS => 'tax_rule_group',
@@ -103,6 +106,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_ADDRESSES => Address::class,
         self::RESOURCE_CUSTOMER_MESSAGES => CustomerMessage::class,
         self::RESOURCE_MESSAGES => Message::class,
+        self::RESOURCE_SPECIFIC_PRICES => SpecificPrice::class,
         self::RESOURCE_TAXES => Tax::class,
         self::RESOURCE_TAX_RULES => TaxRule::class,
         self::RESOURCE_TAX_RULE_GROUPS => TaxRuleGroup::class,
@@ -587,6 +591,40 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function getMessages(array $filters = null): array
     {
         return $this->getResources(self::RESOURCE_MESSAGES, $filters);
+    }
+
+    /**
+     * @param array|null $filters
+     * @return array|SpecificPrice[]
+     */
+    public function getSpecificPrices(array $filters = null): array
+    {
+        return $this->getResources(self::RESOURCE_SPECIFIC_PRICES, $filters);
+    }
+
+    /**
+     * @param SpecificPrice $specificPrice
+     * @return ModelInterface|SpecificPrice
+     * @throws WsException
+     */
+    public function addSpecificPrice(SpecificPrice $specificPrice): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_SPECIFIC_PRICES, $specificPrice);
+    }
+
+    /**
+     * @param SpecificPrice $tax
+     * @return ModelInterface|SpecificPrice
+     * @throws WsException
+     */
+    public function updateSpecificPrice(SpecificPrice $tax): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_SPECIFIC_PRICES, $tax);
+    }
+
+    public function deleteSpecificPrice(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_SPECIFIC_PRICES, $id);
     }
 
     /**
