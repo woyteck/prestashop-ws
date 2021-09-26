@@ -407,10 +407,10 @@ class SpecificPrice implements ModelInterface
         if (isset($array['reduction_tax'])) {
             $stockAvailable->setReductionTax((int) $array['reduction_tax'] === 1);
         }
-        if (isset($array['from'])) {
+        if (isset($array['from']) && $array['from'] !== '0000-00-00 00:00:00') {
             $stockAvailable->setFrom(new DateTime($array['from']));
         }
-        if (isset($array['to'])) {
+        if (isset($array['to']) && $array['to'] !== '0000-00-00 00:00:00') {
             $stockAvailable->setTo(new DateTime($array['to']));
         }
 
