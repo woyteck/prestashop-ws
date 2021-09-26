@@ -603,6 +603,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param int $id
+     * @return ModelInterface|SpecificPrice|null
+     */
+    public function getSpecificPrice(int $id): ?SpecificPrice
+    {
+        return $this->getResource(self::RESOURCE_SPECIFIC_PRICES, $id);
+    }
+
+    /**
      * @param SpecificPrice $specificPrice
      * @return ModelInterface|SpecificPrice
      * @throws WsException
@@ -634,6 +643,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function getTaxes(array $filters = null): array
     {
         return $this->getResources(self::RESOURCE_TAXES, $filters);
+    }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|Tax|null
+     */
+    public function getTax(int $id): ?Tax
+    {
+        return $this->getResource(self::RESOURCE_TAXES, $id);
     }
 
     /**
