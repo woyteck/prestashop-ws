@@ -240,7 +240,7 @@ class Supplier implements ModelInterface
             $supplier->setName($array['name']);
         }
         if (isset($array['active'])) {
-            $supplier->setActive($array['active']);
+            $supplier->setActive($array['active'] === '1');
         }
         if (isset($array['date_add']) && $array['date_add'] !== '0000-00-00 00:00:00') {
             $supplier->setDateAdd(new DateTime($array['date_add']));
