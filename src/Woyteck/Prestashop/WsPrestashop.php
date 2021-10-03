@@ -605,6 +605,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param int $idSupplier
+     * @return ModelInterface|Address|null
+     */
+    public function getAddressByIdSupplier(int $idSupplier): ?Address
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_ADDRESSES, 'id_supplier', (string) $idSupplier);
+    }
+
+    /**
      * @param Address $address
      * @return ModelInterface|Address
      * @throws WsException
