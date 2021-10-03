@@ -875,7 +875,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param string $isoCode
      * @return ModelInterface|Country|null
      */
-    public function getCountryByIsoCode(string $isoCode): ?Address
+    public function getCountryByIsoCode(string $isoCode): ?Country
     {
         return $this->getResourceByFieldValue(self::RESOURCE_COUNTRIES, 'iso_code', $isoCode);
     }
