@@ -614,6 +614,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param string $isoCode
+     * @return ModelInterface|Address|null
+     */
+    public function getAddressByIsoCode(string $isoCode): ?Address
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_ADDRESSES, 'iso_code', $isoCode);
+    }
+
+    /**
      * @param Address $address
      * @return ModelInterface|Address
      * @throws WsException
