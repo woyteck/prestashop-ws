@@ -614,15 +614,6 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
-     * @param string $isoCode
-     * @return ModelInterface|Address|null
-     */
-    public function getAddressByIsoCode(string $isoCode): ?Address
-    {
-        return $this->getResourceByFieldValue(self::RESOURCE_ADDRESSES, 'iso_code', $isoCode);
-    }
-
-    /**
      * @param Address $address
      * @return ModelInterface|Address
      * @throws WsException
@@ -877,6 +868,16 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function getCountries(array $filters = null): array
     {
         return $this->getResources(self::RESOURCE_COUNTRIES, $filters);
+    }
+
+
+    /**
+     * @param string $isoCode
+     * @return ModelInterface|Country|null
+     */
+    public function getCountryByIsoCode(string $isoCode): ?Address
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_COUNTRIES, 'iso_code', $isoCode);
     }
 
     /**
