@@ -533,73 +533,73 @@ class Address implements ModelInterface
     public function toXml(SimpleXMLElement $xml): SimpleXMLElement
     {
         if ($this->getId() !== null) {
-            $xml->customer->id = $this->getId();
+            $xml->address->id = $this->getId();
         }
         if ($this->getIdCustomer() !== null) {
-            $xml->customer->id_customer = $this->getIdCustomer();
+            $xml->address->id_customer = $this->getIdCustomer();
         }
         if ($this->getIdManufacturer() !== null) {
-            $xml->customer->id_manufacturer = $this->getIdManufacturer();
+            $xml->address->id_manufacturer = $this->getIdManufacturer();
         }
         if ($this->getIdSupplier() !== null) {
-            $xml->customer->id_supplier = $this->getIdSupplier();
+            $xml->address->id_supplier = $this->getIdSupplier();
         }
         if ($this->getIdWarehouse() !== null) {
-            $xml->customer->id_warehouse = $this->getIdWarehouse();
+            $xml->address->id_warehouse = $this->getIdWarehouse();
         }
         if ($this->getIdCountry() !== null) {
-            $xml->customer->id_country = $this->getIdCountry();
+            $xml->address->id_country = $this->getIdCountry();
         }
         if ($this->getIdState() !== null) {
-            $xml->customer->id_state = $this->getIdState();
+            $xml->address->id_state = $this->getIdState();
         }
         if ($this->getAlias() !== null) {
-            $xml->customer->alias = $this->getAlias();
+            $xml->address->alias = $this->getAlias();
         }
         if ($this->getCompany() !== null) {
-            $xml->customer->company = $this->getCompany();
+            $xml->address->company = $this->getCompany();
         }
         if ($this->getLastname() !== null) {
-            $xml->customer->lastname = $this->getLastname();
+            $xml->address->lastname = $this->getLastname();
         }
         if ($this->getFirstname() !== null) {
-            $xml->customer->firstname = $this->getFirstname();
+            $xml->address->firstname = $this->getFirstname();
         }
         if ($this->getVatNumber() !== null) {
-            $xml->customer->vat_number = $this->getVatNumber();
+            $xml->address->vat_number = $this->getVatNumber();
         }
         if ($this->getAddress1() !== null) {
-            $xml->customer->address1 = $this->getAddress1();
+            $xml->address->address1 = $this->getAddress1();
         }
         if ($this->getAddress2() !== null) {
-            $xml->customer->address2 = $this->getAddress2();
+            $xml->address->address2 = $this->getAddress2();
         }
         if ($this->getPostcode() !== null) {
-            $xml->customer->postcode = $this->getPostcode();
+            $xml->address->postcode = $this->getPostcode();
         }
         if ($this->getCity() !== null) {
-            $xml->customer->city = $this->getCity();
+            $xml->address->city = $this->getCity();
         }
         if ($this->getOther() !== null) {
-            $xml->customer->other = $this->getOther();
+            $xml->address->other = $this->getOther();
         }
         if ($this->getPhone() !== null) {
-            $xml->customer->phone = $this->getPhone();
+            $xml->address->phone = $this->getPhone();
         }
         if ($this->getPhoneMobile() !== null) {
-            $xml->customer->phone_mobile = $this->getPhoneMobile();
+            $xml->address->phone_mobile = $this->getPhoneMobile();
         }
         if ($this->getDni() !== null) {
-            $xml->customer->dni = $this->getDni();
+            $xml->address->dni = $this->getDni();
         }
         if ($this->isDeleted() !== null) {
-            $xml->customer->deleted = $this->isDeleted() ? '1' : '0';
+            $xml->address->deleted = $this->isDeleted() ? '1' : '0';
         }
         if ($this->getDateAdd() !== null) {
-            $xml->customer->date_add = $this->getDateAdd()->format('Y-m-d H:i:s');
+            $xml->address->date_add = $this->getDateAdd()->format('Y-m-d H:i:s');
         }
         if ($this->getDateUpd() !== null) {
-            $xml->customer->date_upd = $this->getDateUpd()->format('Y-m-d H:i:s');
+            $xml->address->date_upd = $this->getDateUpd()->format('Y-m-d H:i:s');
         }
 
         return $xml;
