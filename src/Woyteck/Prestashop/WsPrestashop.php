@@ -614,6 +614,15 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param string $alias
+     * @return ModelInterface|Address|null
+     */
+    public function getAddressByAlias(string $alias): ?Address
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_ADDRESSES, 'alias', $alias);
+    }
+
+    /**
      * @param Address $address
      * @return ModelInterface|Address
      * @throws WsException
