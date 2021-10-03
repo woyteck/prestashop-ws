@@ -29,6 +29,7 @@ use Woyteck\Prestashop\Model\ProductOption;
 use Woyteck\Prestashop\Model\ProductOptionValue;
 use Woyteck\Prestashop\Model\SpecificPrice;
 use Woyteck\Prestashop\Model\StockAvailable;
+use Woyteck\Prestashop\Model\Supplier;
 use Woyteck\Prestashop\Model\Tag;
 use Woyteck\Prestashop\Model\Tax;
 use Woyteck\Prestashop\Model\TaxRule;
@@ -55,6 +56,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
     private const RESOURCE_MESSAGES = 'messages';
     private const RESOURCE_SPECIFIC_PRICES = 'specific_prices';
+    private const RESOURCE_SUPPLIERS = 'suppliers';
     private const RESOURCE_TAXES = 'taxes';
     private const RESOURCE_TAX_RULES = 'tax_rules';
     private const RESOURCE_TAX_RULE_GROUPS = 'tax_rule_groups';
@@ -80,6 +82,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_CUSTOMER_MESSAGES => 'customer_message',
         self::RESOURCE_MESSAGES => 'message',
         self::RESOURCE_SPECIFIC_PRICES => 'specific_price',
+        self::RESOURCE_SUPPLIERS => 'supplier',
         self::RESOURCE_TAXES => 'tax',
         self::RESOURCE_TAX_RULES => 'tax_rule',
         self::RESOURCE_TAX_RULE_GROUPS => 'tax_rule_group',
@@ -106,6 +109,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_ADDRESSES => Address::class,
         self::RESOURCE_CUSTOMER_MESSAGES => CustomerMessage::class,
         self::RESOURCE_MESSAGES => Message::class,
+        self::RESOURCE_SUPPLIERS => Supplier::class,
         self::RESOURCE_SPECIFIC_PRICES => SpecificPrice::class,
         self::RESOURCE_TAXES => Tax::class,
         self::RESOURCE_TAX_RULES => TaxRule::class,
@@ -652,6 +656,49 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function deleteSpecificPrice(int $id): void
     {
         $this->deleteResource(self::RESOURCE_SPECIFIC_PRICES, $id);
+    }
+
+    /**
+     * @param array|null $filters
+     * @return array|Supplier[]
+     */
+    public function getSuppliers(array $filters = null): array
+    {
+        return $this->getResources(self::RESOURCE_SUPPLIERS, $filters);
+    }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|Supplier|null
+     */
+    public function getSupplier(int $id): ?Supplier
+    {
+        return $this->getResource(self::RESOURCE_SUPPLIERS, $id);
+    }
+
+    /**
+     * @param Supplier $supplier
+     * @return ModelInterface|Supplier
+     * @throws WsException
+     */
+    public function addSupplier(Supplier $supplier): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_SUPPLIERS, $supplier);
+    }
+
+    /**
+     * @param Supplier $supplier
+     * @return ModelInterface|Supplier
+     * @throws WsException
+     */
+    public function updateSupplier(Supplier $supplier): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_SUPPLIERS, $supplier);
+    }
+
+    public function deleteSupplier(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_SUPPLIERS, $id);
     }
 
     /**
