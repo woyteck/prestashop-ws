@@ -454,7 +454,7 @@ class Address implements ModelInterface
         $address = new self;
 
         if (isset($array['id']) && $array['id'] !== '') {
-            $address->setId($array['id']);
+            $address->setId((int) $array['id']);
         }
         if (isset($array['id_customer']) && $array['id_customer'] !== '') {
             $address->setIdCustomer((int) $array['id_customer']);
