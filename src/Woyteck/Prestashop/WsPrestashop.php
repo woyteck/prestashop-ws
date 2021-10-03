@@ -27,6 +27,7 @@ use Woyteck\Prestashop\Model\ProductFeatureValue;
 use Woyteck\Prestashop\Model\ProductImage;
 use Woyteck\Prestashop\Model\ProductOption;
 use Woyteck\Prestashop\Model\ProductOptionValue;
+use Woyteck\Prestashop\Model\ProductSupplier;
 use Woyteck\Prestashop\Model\SpecificPrice;
 use Woyteck\Prestashop\Model\StockAvailable;
 use Woyteck\Prestashop\Model\Supplier;
@@ -46,6 +47,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const RESOURCE_PRODUCT_FEATURE_VALUES = 'product_feature_values';
     private const RESOURCE_PRODUCT_OPTIONS = 'product_options';
     private const RESOURCE_PRODUCT_OPTION_VALUES = 'product_option_values';
+    private const RESOURCE_PRODUCT_SUPPLIERS = 'product_suppliers';
     private const RESOURCE_STOCK_AVAILABLES = 'stock_availables';
     private const RESOURCE_MANUFACTURERS = 'manufacturers';
     private const RESOURCE_ORDERS = 'orders';
@@ -72,6 +74,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_PRODUCT_FEATURE_VALUES => 'product_feature_value',
         self::RESOURCE_PRODUCT_OPTIONS => 'product_option',
         self::RESOURCE_PRODUCT_OPTION_VALUES => 'product_option_value',
+        self::RESOURCE_PRODUCT_SUPPLIERS => 'product_supplier',
         self::RESOURCE_STOCK_AVAILABLES => 'stock_available',
         self::RESOURCE_MANUFACTURERS => 'manufacturer',
         self::RESOURCE_ORDERS => 'order',
@@ -100,6 +103,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_PRODUCT_FEATURE_VALUES => ProductFeatureValue::class,
         self::RESOURCE_PRODUCT_OPTIONS => ProductOption::class,
         self::RESOURCE_PRODUCT_OPTION_VALUES => ProductOptionValue::class,
+        self::RESOURCE_PRODUCT_SUPPLIERS => ProductSupplier::class,
         self::RESOURCE_STOCK_AVAILABLES => StockAvailable::class,
         self::RESOURCE_MANUFACTURERS => Manufacturer::class,
         self::RESOURCE_ORDERS => Order::class,
@@ -699,6 +703,49 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function deleteSupplier(int $id): void
     {
         $this->deleteResource(self::RESOURCE_SUPPLIERS, $id);
+    }
+
+    /**
+     * @param array|null $filters
+     * @return array|ProductSupplier[]
+     */
+    public function getProductSuppliers(array $filters = null): array
+    {
+        return $this->getResources(self::RESOURCE_PRODUCT_SUPPLIERS, $filters);
+    }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|ProductSupplier|null
+     */
+    public function getProductSupplier(int $id): ?ProductSupplier
+    {
+        return $this->getResource(self::RESOURCE_PRODUCT_SUPPLIERS, $id);
+    }
+
+    /**
+     * @param ProductSupplier $productSupplier
+     * @return ModelInterface|ProductSupplier
+     * @throws WsException
+     */
+    public function addProductSupplier(ProductSupplier $productSupplier): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_PRODUCT_SUPPLIERS, $productSupplier);
+    }
+
+    /**
+     * @param ProductSupplier $productSupplier
+     * @return ModelInterface|ProductSupplier
+     * @throws WsException
+     */
+    public function updateProductSupplier(ProductSupplier $productSupplier): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_PRODUCT_SUPPLIERS, $productSupplier);
+    }
+
+    public function deleteProductSupplier(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_PRODUCT_SUPPLIERS, $id);
     }
 
     /**

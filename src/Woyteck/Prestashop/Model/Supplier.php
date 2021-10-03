@@ -290,16 +290,16 @@ class Supplier implements ModelInterface
             $xml->supplier->date_upd = '0000-00-00 00:00:00';
         }
         if ($this->getDescription() !== null) {
-            $xml->supplier->description = $this->getDescription();
+            $xml->supplier->description->language = $this->getDescription();
         }
         if ($this->getMetaTitle() !== null) {
-            $xml->supplier->meta_title = $this->getMetaTitle();
+            $xml->supplier->meta_title->language = $this->getMetaTitle();
         }
         if ($this->getMetaDescription() !== null) {
-            $xml->supplier->meta_description = $this->getMetaDescription();
+            $xml->supplier->meta_description->language = $this->getMetaDescription();
         }
         if ($this->getMetaKeywords() !== null) {
-            $xml->supplier->meta_keywords = $this->getMetaKeywords();
+            $xml->supplier->meta_keywords->language = $this->getMetaKeywords();
         }
 
         return $xml;
