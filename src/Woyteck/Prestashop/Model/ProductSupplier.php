@@ -168,16 +168,16 @@ class ProductSupplier implements ModelInterface
             $supplier->setId((int) $array['id']);
         }
         if (isset($array['id_product'])) {
-            $supplier->setIdProduct($array['id_product']);
+            $supplier->setIdProduct((int) $array['id_product']);
         }
         if (isset($array['id_product_attribute'])) {
-            $supplier->setIdProductAttribute($array['id_product_attribute']);
+            $supplier->setIdProductAttribute((int) $array['id_product_attribute']);
         }
         if (isset($array['id_supplier'])) {
-            $supplier->setIdSupplier($array['id_supplier']);
+            $supplier->setIdSupplier((int) $array['id_supplier']);
         }
         if (isset($array['id_currency'])) {
-            $supplier->setIdCurrency($array['id_currency']);
+            $supplier->setIdCurrency((int) $array['id_currency']);
         }
         if (isset($array['product_supplier_reference'])) {
             $supplier->setProductSupplierReference($array['product_supplier_reference']);
