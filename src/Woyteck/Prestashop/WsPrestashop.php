@@ -39,87 +39,87 @@ use Woyteck\Webservice\GuzzleBasedAbstract;
 
 class WsPrestashop extends GuzzleBasedAbstract
 {
+    private const RESOURCE_ADDRESSES = 'addresses';
+    private const RESOURCE_BL_ORDERS = 'orders';
     private const RESOURCE_CATEGORIES = 'categories';
-    private const RESOURCE_PRODUCTS = 'products';
     private const RESOURCE_COMBINATIONS = 'combinations';
+    private const RESOURCE_COUNTRIES = 'countries';
+    private const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
+    private const RESOURCE_CUSTOMERS = 'customers';
+    private const RESOURCE_MANUFACTURERS = 'manufacturers';
+    private const RESOURCE_MESSAGES = 'messages';
+    private const RESOURCE_ORDER_CARRIERS = 'order_carriers';
+    private const RESOURCE_ORDERS = 'orders';
     private const RESOURCE_PRODUCT_IMAGES = 'images/products';
     private const RESOURCE_PRODUCT_FEATURES = 'product_features';
     private const RESOURCE_PRODUCT_FEATURE_VALUES = 'product_feature_values';
     private const RESOURCE_PRODUCT_OPTIONS = 'product_options';
     private const RESOURCE_PRODUCT_OPTION_VALUES = 'product_option_values';
     private const RESOURCE_PRODUCT_SUPPLIERS = 'product_suppliers';
+    private const RESOURCE_PRODUCTS = 'products';
     private const RESOURCE_STOCK_AVAILABLES = 'stock_availables';
-    private const RESOURCE_MANUFACTURERS = 'manufacturers';
-    private const RESOURCE_ORDERS = 'orders';
-    private const RESOURCE_BL_ORDERS = 'orders';
-    private const RESOURCE_ORDER_CARRIERS = 'order_carriers';
-    private const RESOURCE_CUSTOMERS = 'customers';
-    private const RESOURCE_ADDRESSES = 'addresses';
-    private const RESOURCE_CUSTOMER_MESSAGES = 'customer_messages';
-    private const RESOURCE_MESSAGES = 'messages';
     private const RESOURCE_SPECIFIC_PRICES = 'specific_prices';
     private const RESOURCE_SUPPLIERS = 'suppliers';
-    private const RESOURCE_TAXES = 'taxes';
+    private const RESOURCE_TAGS = 'tags';
     private const RESOURCE_TAX_RULES = 'tax_rules';
     private const RESOURCE_TAX_RULE_GROUPS = 'tax_rule_groups';
-    private const RESOURCE_COUNTRIES = 'countries';
-    private const RESOURCE_TAGS = 'tags';
+    private const RESOURCE_TAXES = 'taxes';
 
     private const SINGLE = [
+        self::RESOURCE_ADDRESSES => 'address',
+        self::RESOURCE_BL_ORDERS => 'order',
         self::RESOURCE_CATEGORIES => 'category',
-        self::RESOURCE_PRODUCTS => 'product',
         self::RESOURCE_COMBINATIONS => 'combination',
+        self::RESOURCE_COUNTRIES => 'country',
+        self::RESOURCE_CUSTOMER_MESSAGES => 'customer_message',
+        self::RESOURCE_CUSTOMERS => 'customer',
+        self::RESOURCE_MANUFACTURERS => 'manufacturer',
+        self::RESOURCE_MESSAGES => 'message',
+        self::RESOURCE_ORDER_CARRIERS => 'order_carrier',
+        self::RESOURCE_ORDERS => 'order',
         self::RESOURCE_PRODUCT_IMAGES => 'image',
         self::RESOURCE_PRODUCT_FEATURES => 'product_feature',
         self::RESOURCE_PRODUCT_FEATURE_VALUES => 'product_feature_value',
         self::RESOURCE_PRODUCT_OPTIONS => 'product_option',
         self::RESOURCE_PRODUCT_OPTION_VALUES => 'product_option_value',
         self::RESOURCE_PRODUCT_SUPPLIERS => 'product_supplier',
+        self::RESOURCE_PRODUCTS => 'product',
         self::RESOURCE_STOCK_AVAILABLES => 'stock_available',
-        self::RESOURCE_MANUFACTURERS => 'manufacturer',
-        self::RESOURCE_ORDERS => 'order',
-        self::RESOURCE_BL_ORDERS => 'order',
-        self::RESOURCE_ORDER_CARRIERS => 'order_carrier',
-        self::RESOURCE_CUSTOMERS => 'customer',
-        self::RESOURCE_ADDRESSES => 'address',
-        self::RESOURCE_CUSTOMER_MESSAGES => 'customer_message',
-        self::RESOURCE_MESSAGES => 'message',
         self::RESOURCE_SPECIFIC_PRICES => 'specific_price',
         self::RESOURCE_SUPPLIERS => 'supplier',
-        self::RESOURCE_TAXES => 'tax',
+        self::RESOURCE_TAGS => 'tags',
         self::RESOURCE_TAX_RULES => 'tax_rule',
         self::RESOURCE_TAX_RULE_GROUPS => 'tax_rule_group',
-        self::RESOURCE_COUNTRIES => 'country',
-        self::RESOURCE_TAGS => 'tags',
+        self::RESOURCE_TAXES => 'tax',
     ];
 
     /** @var ModelInterface[] */
     private const MODEL = [
+        self::RESOURCE_ADDRESSES => Address::class,
+        self::RESOURCE_BL_ORDERS => Order::class,
         self::RESOURCE_CATEGORIES => Category::class,
-        self::RESOURCE_PRODUCTS => Product::class,
         self::RESOURCE_COMBINATIONS => Combination::class,
+        self::RESOURCE_COUNTRIES => Country::class,
+        self::RESOURCE_CUSTOMER_MESSAGES => CustomerMessage::class,
+        self::RESOURCE_CUSTOMERS => Customer::class,
+        self::RESOURCE_MANUFACTURERS => Manufacturer::class,
+        self::RESOURCE_MESSAGES => Message::class,
+        self::RESOURCE_ORDER_CARRIERS => OrderCarrier::class,
+        self::RESOURCE_ORDERS => Order::class,
         self::RESOURCE_PRODUCT_IMAGES => ProductImage::class,
         self::RESOURCE_PRODUCT_FEATURES => ProductFeature::class,
         self::RESOURCE_PRODUCT_FEATURE_VALUES => ProductFeatureValue::class,
         self::RESOURCE_PRODUCT_OPTIONS => ProductOption::class,
         self::RESOURCE_PRODUCT_OPTION_VALUES => ProductOptionValue::class,
         self::RESOURCE_PRODUCT_SUPPLIERS => ProductSupplier::class,
+        self::RESOURCE_PRODUCTS => Product::class,
         self::RESOURCE_STOCK_AVAILABLES => StockAvailable::class,
-        self::RESOURCE_MANUFACTURERS => Manufacturer::class,
-        self::RESOURCE_ORDERS => Order::class,
-        self::RESOURCE_BL_ORDERS => Order::class,
-        self::RESOURCE_ORDER_CARRIERS => OrderCarrier::class,
-        self::RESOURCE_CUSTOMERS => Customer::class,
-        self::RESOURCE_ADDRESSES => Address::class,
-        self::RESOURCE_CUSTOMER_MESSAGES => CustomerMessage::class,
-        self::RESOURCE_MESSAGES => Message::class,
         self::RESOURCE_SUPPLIERS => Supplier::class,
         self::RESOURCE_SPECIFIC_PRICES => SpecificPrice::class,
-        self::RESOURCE_TAXES => Tax::class,
+        self::RESOURCE_TAGS => Tag::class,
         self::RESOURCE_TAX_RULES => TaxRule::class,
         self::RESOURCE_TAX_RULE_GROUPS => TaxRuleGroup::class,
-        self::RESOURCE_COUNTRIES => Country::class,
-        self::RESOURCE_TAGS => Tag::class,
+        self::RESOURCE_TAXES => Tax::class,
     ];
 
     /** @var string */
@@ -587,12 +587,46 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param array|null $filters
+     * @return array|Address[]
+     */
+    public function getAddresses(array $filters = null): array
+    {
+        return $this->getResources(self::RESOURCE_ADDRESSES, $filters);
+    }
+
+    /**
      * @param int $id
      * @return ModelInterface|Address|null
      */
-    public function getAddress(int $id): ?ModelInterface
+    public function getAddress(int $id): ?Address
     {
         return $this->getResource(self::RESOURCE_ADDRESSES, $id);
+    }
+
+    /**
+     * @param Address $address
+     * @return ModelInterface|Address
+     * @throws WsException
+     */
+    public function addAddress(Address $address): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_ADDRESSES, $address);
+    }
+
+    /**
+     * @param Address $address
+     * @return ModelInterface|Address
+     * @throws WsException
+     */
+    public function updateAddress(Address $address): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_ADDRESSES, $address);
+    }
+
+    public function deleteAddress(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_ADDRESSES, $id);
     }
 
     public function getCustomerMessages(): array
