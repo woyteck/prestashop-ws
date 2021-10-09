@@ -152,7 +152,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Category
      */
-    public function getCategory(int $id): ?ModelInterface
+    public function getCategory(int $id): ?Category
     {
         return $this->getResource(self::RESOURCE_CATEGORIES, $id);
     }
@@ -194,7 +194,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Product
      */
-    public function getProduct(int $id): ?ModelInterface
+    public function getProduct(int $id): ?Product
     {
         return $this->getResource(self::RESOURCE_PRODUCTS, $id);
     }
@@ -263,7 +263,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Combination
      */
-    public function getCombination(int $id): ?ModelInterface
+    public function getCombination(int $id): ?Combination
     {
         return $this->getResource(self::RESOURCE_COMBINATIONS, $id);
     }
@@ -305,7 +305,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|StockAvailable
      */
-    public function getStockAvailable(int $id): ?ModelInterface
+    public function getStockAvailable(int $id): ?StockAvailable
     {
         return $this->getResource(self::RESOURCE_STOCK_AVAILABLES, $id);
     }
@@ -365,7 +365,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Manufacturer
      */
-    public function getManufacturer(int $id): ModelInterface
+    public function getManufacturer(int $id): ?Manufacturer
     {
         return $this->getResource(self::RESOURCE_MANUFACTURERS, $id);
     }
@@ -517,7 +517,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Order|null
      */
-    public function getOrder(int $id): ?ModelInterface
+    public function getOrder(int $id): ?Order
     {
         return $this->getResource(self::RESOURCE_ORDERS, $id);
     }
@@ -545,7 +545,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Order|null
      */
-    public function getBlOrder(int $id): ?ModelInterface
+    public function getBlOrder(int $id): ?Order
     {
         return $this->getResource(self::RESOURCE_BL_ORDERS, $id, 'bl_order');
     }
@@ -554,7 +554,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|OrderCarrier|null
      */
-    public function getOrderCarrier(int $id): ?ModelInterface
+    public function getOrderCarrier(int $id): ?OrderCarrier
     {
         return $this->getResource(self::RESOURCE_ORDER_CARRIERS, $id);
     }
@@ -581,7 +581,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Customer|null
      */
-    public function getCustomer(int $id): ?ModelInterface
+    public function getCustomer(int $id): ?Customer
     {
         return $this->getResource(self::RESOURCE_CUSTOMERS, $id);
     }
@@ -661,7 +661,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResources(self::RESOURCE_CUSTOMER_MESSAGES);
     }
 
-    public function getCustomerMessage(int $id): ?ModelInterface
+    public function getCustomerMessage(int $id): ?CustomerMessage
     {
         return $this->getResource(self::RESOURCE_CUSTOMER_MESSAGES, $id);
     }
@@ -874,7 +874,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|TaxRuleGroup|null
      */
-    public function getTaxRuleGroup(int $id)
+    public function getTaxRuleGroup(int $id): ?TaxRuleGroup
     {
         return $this->getResource(self::RESOURCE_TAX_RULE_GROUPS, $id);
     }
@@ -987,7 +987,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|ProductOption|null
      */
-    public function getProductOption(int $id): ?ModelInterface
+    public function getProductOption(int $id): ?ProductOption
     {
         return $this->getResource(self::RESOURCE_PRODUCT_OPTIONS, $id);
     }
@@ -1063,7 +1063,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param int $id
      * @return ModelInterface|Tag
      */
-    public function getTag(int $id): ?ModelInterface
+    public function getTag(int $id): ?Tag
     {
         return $this->getResource(self::RESOURCE_TAGS, $id);
     }
