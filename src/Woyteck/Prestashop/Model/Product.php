@@ -1415,7 +1415,7 @@ class Product implements ModelInterface
                         foreach ($association as $associationItem) {
                             $product = $accessories->addChild('product');
                             if (isset($associationItem['id'])) {
-                                $product->addChild('id', $associationItem['id']);
+                                $product->addChild('id', (string) $associationItem['id']);
                             }
                         }
                         break;
