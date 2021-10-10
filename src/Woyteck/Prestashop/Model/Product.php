@@ -1413,8 +1413,8 @@ class Product implements ModelInterface
                         $accessories->addAttribute('nodeType', 'product');
                         $accessories->addAttribute('api', 'products');
                         foreach ($association as $associationItem) {
-                            $product = $accessories->addChild('product');
                             if (isset($associationItem['id'])) {
+                                $product = $accessories->addChild('product');
                                 $product->addChild('id', (string) $associationItem['id']);
                             }
                         }
