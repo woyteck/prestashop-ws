@@ -1420,7 +1420,6 @@ class Product implements ModelInterface
                         }
                         break;
                 }
-
             }
         }
 
