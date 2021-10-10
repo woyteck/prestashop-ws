@@ -1374,9 +1374,9 @@ class Product implements ModelInterface
                         $categories->addAttribute('nodeType', 'category');
                         $categories->addAttribute('api', 'categories');
                         foreach ($association as $associationItem) {
-                            $category = $categories->addChild('category');
                             if (isset($associationItem['id'])) {
-                                $category->addChild('id', (string)$associationItem['id']);
+                                $category = $categories->addChild('category');
+                                $category->addChild('id', (string) $associationItem['id']);
                             }
                         }
                         break;
