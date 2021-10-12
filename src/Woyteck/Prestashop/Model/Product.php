@@ -238,6 +238,9 @@ class Product implements ModelInterface
     /** @var array */
     private $associations;
 
+    /** @var int */
+    private $idLatestIssue;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -938,6 +941,16 @@ class Product implements ModelInterface
         $this->associations = $associations;
     }
 
+    public function getIdLatestIssue(): ?int
+    {
+        return $this->idLatestIssue;
+    }
+
+    public function setIdLatestIssue(int $idLatestIssue): void
+    {
+        $this->idLatestIssue = $idLatestIssue;
+    }
+
     /**
      * @param array $array
      * @return self
@@ -1156,6 +1169,9 @@ class Product implements ModelInterface
         }
         if (isset($array['associations'])) {
             $product->setAssociations($array['associations']);
+        }
+        if (isset($array['id_latest_issue'])) {
+            $product->setIdLatestIssue($array['id_latest_issue']);
         }
 
         return $product;
@@ -1421,6 +1437,9 @@ class Product implements ModelInterface
                         break;
                 }
             }
+        }
+        if ($this->getIdLatestIssue() !== null) {
+            $xml->product->id_latest_issue = $this->getIdLatestIssue();
         }
 
         return $xml;
