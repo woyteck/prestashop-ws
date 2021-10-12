@@ -1171,7 +1171,7 @@ class Product implements ModelInterface
             $product->setAssociations($array['associations']);
         }
         if (isset($array['id_latest_issue'])) {
-            $product->setIdLatestIssue($array['id_latest_issue']);
+            $product->setIdLatestIssue((int) $array['id_latest_issue']);
         }
 
         return $product;
