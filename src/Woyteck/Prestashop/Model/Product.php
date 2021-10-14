@@ -241,6 +241,9 @@ class Product implements ModelInterface
     /** @var int */
     private $idLatestIssue;
 
+    /** @var string */
+    private $additionalMessage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -951,6 +954,16 @@ class Product implements ModelInterface
         $this->idLatestIssue = $idLatestIssue;
     }
 
+    public function getAdditionalMessage(): ?string
+    {
+        return $this->additionalMessage;
+    }
+
+    public function setAdditionalMessage(string $additionalMessage): void
+    {
+        $this->additionalMessage = $additionalMessage;
+    }
+
     /**
      * @param array $array
      * @return self
@@ -1172,6 +1185,9 @@ class Product implements ModelInterface
         }
         if (isset($array['id_latest_issue'])) {
             $product->setIdLatestIssue((int) $array['id_latest_issue']);
+        }
+        if (isset($array['additional_message'])) {
+            $product->setAdditionalMessage($array['additional_message']);
         }
 
         return $product;
@@ -1440,6 +1456,9 @@ class Product implements ModelInterface
         }
         if ($this->getIdLatestIssue() !== null) {
             $xml->product->id_latest_issue = $this->getIdLatestIssue();
+        }
+        if ($this->getAdditionalMessage() !== null) {
+            $xml->product->additional_message = $this->getAdditionalMessage();
         }
 
         return $xml;
