@@ -58,10 +58,10 @@ class Tag implements ModelInterface
     {
         $tag = new self;
         if (isset($array['id'])) {
-            $tag->setId($array['id']);
+            $tag->setId((int) $array['id']);
         }
         if (isset($array['id_lang'])) {
-            $tag->setIdLang($array['id_lang']);
+            $tag->setIdLang((int) $array['id_lang']);
         }
         if (isset($array['name'])) {
             $tag->setName($array['name']);
