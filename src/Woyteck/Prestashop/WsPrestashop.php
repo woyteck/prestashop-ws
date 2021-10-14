@@ -1068,6 +1068,15 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResource(self::RESOURCE_TAGS, $id);
     }
 
+    /**
+     * @param string $name
+     * @return ModelInterface|Tag|null
+     */
+    public function getTagByName(string $name): ?ModelInterface
+    {
+        return $this->getResourceByFieldValue(self::RESOURCE_TAGS, 'name', $name);
+    }
+
     public function getTags(array $filters = null): array
     {
         return $this->getResources(self::RESOURCE_TAGS, $filters);
