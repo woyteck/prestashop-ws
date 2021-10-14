@@ -1082,6 +1082,26 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResources(self::RESOURCE_TAGS, $filters);
     }
 
+    /**
+     * @param Tag $tag
+     * @return ModelInterface|Tag
+     * @throws WsException
+     */
+    public function addTag(Tag $tag): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_TAGS, $tag);
+    }
+
+    /**
+     * @param Tag $tag
+     * @return ModelInterface|Tag
+     * @throws WsException
+     */
+    public function updateTag(Tag $tag): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_TAGS, $tag);
+    }
+
     private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null): array
     {
         $url = $this->constructUrl($endpointOverride ?? $resourceName);
