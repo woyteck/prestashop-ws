@@ -1451,6 +1451,17 @@ class Product implements ModelInterface
                             }
                         }
                         break;
+                    case 'tags':
+                        $tags = $xml->product->associations->addChild('tags');
+                        $tags->addAttribute('nodeType', 'tag');
+                        $tags->addAttribute('api', 'tags');
+                        foreach ($association as $associationItem) {
+                            if (isset($associationItem['id'])) {
+                                $tag = $tags->addChild('tag');
+                                $tag->addChild('id', (string) $associationItem['id']);
+                            }
+                        }
+                        break;
                 }
             }
         }
