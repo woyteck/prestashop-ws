@@ -87,7 +87,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         self::RESOURCE_STOCK_AVAILABLES => 'stock_available',
         self::RESOURCE_SPECIFIC_PRICES => 'specific_price',
         self::RESOURCE_SUPPLIERS => 'supplier',
-        self::RESOURCE_TAGS => 'tags',
+        self::RESOURCE_TAGS => 'tag',
         self::RESOURCE_TAX_RULES => 'tax_rule',
         self::RESOURCE_TAX_RULE_GROUPS => 'tax_rule_group',
         self::RESOURCE_TAXES => 'tax',
