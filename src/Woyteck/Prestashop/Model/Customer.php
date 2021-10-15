@@ -654,7 +654,7 @@ class Customer implements ModelInterface
         $customer = new self;
 
         if (isset($array['id'])) {
-            $customer->setId($array['id']);
+            $customer->setId((int) $array['id']);
         }
         if (isset($array['id_default_group'])) {
             $customer->setIdDefaultGroup((int) $array['id_default_group']);
