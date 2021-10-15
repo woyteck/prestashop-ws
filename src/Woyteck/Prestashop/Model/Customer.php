@@ -876,6 +876,23 @@ class Customer implements ModelInterface
         if ($this->getResetPasswordValidity() !== null) {
             $xml->customer->reset_password_validity = $this->getResetPasswordValidity()->format('Y-m-d H:i:s');
         }
+        if ($this->getAssociations() !== null) {
+            foreach ($this->getAssociations() as $associationKey => $association) {
+                switch ($associationKey) {
+                    case 'groups':
+                        $groups = $xml->customer->associations->addChild('groups');
+                        $groups->addAttribute('nodeType', 'group');
+                        $groups->addAttribute('api', 'groups');
+                        foreach ($association as $associationItem) {
+                            if (isset($associationItem['id'])) {
+                                $group = $groups->addChild('group');
+                                $group->addChild('id', (string) $associationItem['id']);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
 
         return $xml;
     }
