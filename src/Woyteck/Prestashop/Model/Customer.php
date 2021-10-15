@@ -28,8 +28,14 @@ class Customer implements ModelInterface
     /** @var DateTime */
     private $lastPasswdGen;
 
+    /** @var string */
+    private $secureKey;
+
     /** @var bool */
     private $deleted;
+
+    /** @var string */
+    private $passwd;
 
     /** @var string */
     private $lastname;
@@ -197,6 +203,22 @@ class Customer implements ModelInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getSecureKey(): ?string
+    {
+        return $this->secureKey;
+    }
+
+    /**
+     * @param string $secureKey
+     */
+    public function setSecureKey(string $secureKey): void
+    {
+        $this->secureKey = $secureKey;
+    }
+
+    /**
      * @return bool|null
      */
     public function isDeleted(): ?bool
@@ -210,6 +232,22 @@ class Customer implements ModelInterface
     public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPasswd(): ?string
+    {
+        return $this->passwd;
+    }
+
+    /**
+     * @param string $passwd
+     */
+    public function setPasswd(string $passwd): void
+    {
+        $this->passwd = $passwd;
     }
 
     /**
@@ -639,8 +677,14 @@ class Customer implements ModelInterface
         ) {
             $customer->setLastPasswdGen(new DateTime($array['last_passwd_gen']));
         }
+        if (isset($array['secure_key'])) {
+            $customer->setSecureKey($array['secure_key']);
+        }
         if (isset($array['deleted'])) {
             $customer->setDeleted($array['deleted'] === '1');
+        }
+        if (isset($array['passwd'])) {
+            $customer->setPasswd($array['passwd']);
         }
         if (isset($array['lastname'])) {
             $customer->setLastname($array['lastname']);
@@ -751,8 +795,14 @@ class Customer implements ModelInterface
         if ($this->getLastPasswdGen() !== null) {
             $xml->customer->last_passwd_gen = $this->getLastPasswdGen()->format('Y-m-d H:i:s');
         }
+        if ($this->getSecureKey() !== null) {
+            $xml->customer->secure_key = $this->getSecureKey();
+        }
         if ($this->isDeleted() !== null) {
             $xml->customer->deleted = $this->isDeleted() ? '1' : '0';
+        }
+        if ($this->getPasswd() !== null) {
+            $xml->customer->passwd = $this->getPasswd();
         }
         if ($this->getLastname() !== null) {
             $xml->customer->lastname = $this->getLastname();
