@@ -578,12 +578,46 @@ class WsPrestashop extends GuzzleBasedAbstract
     }
 
     /**
+     * @param array|null $filters
+     * @return array|Customer[]
+     */
+    public function getCustomers(array $filters = null): array
+    {
+        return $this->getResources(self::RESOURCE_CUSTOMERS, $filters);
+    }
+
+    /**
      * @param int $id
      * @return ModelInterface|Customer|null
      */
     public function getCustomer(int $id): ?Customer
     {
         return $this->getResource(self::RESOURCE_CUSTOMERS, $id);
+    }
+
+    /**
+     * @param Customer $customer
+     * @return ModelInterface|Customer
+     * @throws WsException
+     */
+    public function addCustomer(Customer $customer): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_CUSTOMERS, $customer);
+    }
+
+    /**
+     * @param Customer $customer
+     * @return ModelInterface|Customer
+     * @throws WsException
+     */
+    public function updateCustomer(Customer $customer): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_CUSTOMERS, $customer);
+    }
+
+    public function deleteCustomer(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_CUSTOMERS, $id);
     }
 
     /**
