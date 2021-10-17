@@ -700,6 +700,7 @@ class Customer implements ModelInterface
         }
         if (isset($array['birthday'])
             && $array['birthday'] !== ''
+            && $array['birthday'] !== '0000-00-00'
             && $array['birthday'] !== '0000-00-00 00:00:00'
         ) {
             $customer->setBirthday(new DateTime($array['birthday']));
