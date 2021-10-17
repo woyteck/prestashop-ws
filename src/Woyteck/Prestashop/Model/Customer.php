@@ -794,6 +794,8 @@ class Customer implements ModelInterface
         }
         if ($this->getLastPasswdGen() !== null) {
             $xml->customer->last_passwd_gen = $this->getLastPasswdGen()->format('Y-m-d H:i:s');
+        } else {
+            $xml->customer->last_passwd_gen = '0000-00-00 00:00:00';
         }
         if ($this->getSecureKey() !== null) {
             $xml->customer->secure_key = $this->getSecureKey();
@@ -818,6 +820,8 @@ class Customer implements ModelInterface
         }
         if ($this->getBirthday() !== null) {
             $xml->customer->birthday = $this->getBirthday()->format('Y-m-d');
+        } else {
+            $xml->customer->birthday = '0000-00-00';
         }
         if ($this->isNewsletter() !== null) {
             $xml->customer->newsletter = $this->isNewsletter() ? '1' : '0';
