@@ -800,7 +800,7 @@ class Order implements ModelInterface
             $order->setTotalShippingTaxExcl((float) $array['total_shipping_tax_excl']);
         }
         if (isset($array['carrier_tax_rate'])) {
-            $order->setCarrierTaxRate((int) round($array['carrier_tax_rate']));
+            $order->setCarrierTaxRate((int) round((float) $array['carrier_tax_rate']));
         }
         if (isset($array['total_wrapping'])) {
             $order->setTotalWrapping((float) $array['total_wrapping']);
