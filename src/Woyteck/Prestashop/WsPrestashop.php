@@ -922,6 +922,14 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResources(self::RESOURCE_COUNTRIES, $filters);
     }
 
+    /**
+     * @param int $id
+     * @return ModelInterface|Country|null
+     */
+    public function getCountry(int $id): ?Country
+    {
+        return $this->getResource(self::RESOURCE_COUNTRIES, $id);
+    }
 
     /**
      * @param string $isoCode
