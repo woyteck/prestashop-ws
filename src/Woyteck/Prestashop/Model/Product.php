@@ -244,6 +244,9 @@ class Product implements ModelInterface
     /** @var string */
     private $additionalMessage;
 
+    /** @var string */
+    private $availability;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -964,6 +967,16 @@ class Product implements ModelInterface
         $this->additionalMessage = $additionalMessage;
     }
 
+    public function getAvailability(): ?string
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability(string $availability): void
+    {
+        $this->availability = $availability;
+    }
+
     /**
      * @param array $array
      * @return self
@@ -1188,6 +1201,9 @@ class Product implements ModelInterface
         }
         if (isset($array['additional_message'])) {
             $product->setAdditionalMessage($array['additional_message']);
+        }
+        if (isset($array['availability'])) {
+            $product->setAvailability($array['availability']);
         }
 
         return $product;
@@ -1470,6 +1486,9 @@ class Product implements ModelInterface
         }
         if ($this->getAdditionalMessage() !== null) {
             $xml->product->additional_message = $this->getAdditionalMessage();
+        }
+        if ($this->getAvailability() !== null) {
+            $xml->product->availability = $this->getAvailability();
         }
 
         return $xml;
