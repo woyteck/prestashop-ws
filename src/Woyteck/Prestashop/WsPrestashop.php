@@ -11,6 +11,7 @@ use SimpleXMLElement;
 use stdClass;
 use Woyteck\Db\ModelFactory;
 use Woyteck\Prestashop\Model\Address;
+use Woyteck\Prestashop\Model\Cart;
 use Woyteck\Prestashop\Model\Category;
 use Woyteck\Prestashop\Model\Combination;
 use Woyteck\Prestashop\Model\Country;
@@ -41,6 +42,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 {
     private const RESOURCE_ADDRESSES = 'addresses';
     private const RESOURCE_BL_ORDERS = 'orders';
+    private const RESOURCE_CARTS = 'carts';
     private const RESOURCE_CATEGORIES = 'categories';
     private const RESOURCE_COMBINATIONS = 'combinations';
     private const RESOURCE_COUNTRIES = 'countries';
@@ -68,6 +70,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const SINGLE = [
         self::RESOURCE_ADDRESSES => 'address',
         self::RESOURCE_BL_ORDERS => 'order',
+        self::RESOURCE_CARTS => 'cart',
         self::RESOURCE_CATEGORIES => 'category',
         self::RESOURCE_COMBINATIONS => 'combination',
         self::RESOURCE_COUNTRIES => 'country',
@@ -97,6 +100,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const MODEL = [
         self::RESOURCE_ADDRESSES => Address::class,
         self::RESOURCE_BL_ORDERS => Order::class,
+        self::RESOURCE_CARTS => Cart::class,
         self::RESOURCE_CATEGORIES => Category::class,
         self::RESOURCE_COMBINATIONS => Combination::class,
         self::RESOURCE_COUNTRIES => Country::class,
@@ -180,6 +184,48 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function deleteCategory(int $id): void
     {
         $this->deleteResource(self::RESOURCE_CATEGORIES, $id);
+    }
+
+    /**
+     * @return array|Cart[]
+     */
+    public function getCarts(): array
+    {
+        return $this->getResources(self::RESOURCE_CARTS);
+    }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|Cart
+     */
+    public function getCart(int $id): ?Cart
+    {
+        return $this->getResource(self::RESOURCE_CARTS, $id);
+    }
+
+    /**
+     * @param Cart $cart
+     * @return ModelInterface|Cart
+     * @throws WsException
+     */
+    public function addCart(Cart $cart): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_CARTS, $cart);
+    }
+
+    /**
+     * @param Cart $cart
+     * @return ModelInterface|Cart
+     * @throws WsException
+     */
+    public function updateCart(Cart $cart): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_CARTS, $cart);
+    }
+
+    public function deleteCart(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_CARTS, $id);
     }
 
     /**
