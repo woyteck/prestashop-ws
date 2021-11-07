@@ -11,6 +11,7 @@ use SimpleXMLElement;
 use stdClass;
 use Woyteck\Db\ModelFactory;
 use Woyteck\Prestashop\Model\Address;
+use Woyteck\Prestashop\Model\Carrier;
 use Woyteck\Prestashop\Model\Cart;
 use Woyteck\Prestashop\Model\Category;
 use Woyteck\Prestashop\Model\Combination;
@@ -42,6 +43,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 {
     private const RESOURCE_ADDRESSES = 'addresses';
     private const RESOURCE_BL_ORDERS = 'orders';
+    private const RESOURCE_CARRIERS = 'carriers';
     private const RESOURCE_CARTS = 'carts';
     private const RESOURCE_CATEGORIES = 'categories';
     private const RESOURCE_COMBINATIONS = 'combinations';
@@ -70,6 +72,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const SINGLE = [
         self::RESOURCE_ADDRESSES => 'address',
         self::RESOURCE_BL_ORDERS => 'order',
+        self::RESOURCE_CARRIERS => 'carrier',
         self::RESOURCE_CARTS => 'cart',
         self::RESOURCE_CATEGORIES => 'category',
         self::RESOURCE_COMBINATIONS => 'combination',
@@ -100,6 +103,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private const MODEL = [
         self::RESOURCE_ADDRESSES => Address::class,
         self::RESOURCE_BL_ORDERS => Order::class,
+        self::RESOURCE_CARRIERS => Carrier::class,
         self::RESOURCE_CARTS => Cart::class,
         self::RESOURCE_CATEGORIES => Category::class,
         self::RESOURCE_COMBINATIONS => Combination::class,
@@ -184,6 +188,48 @@ class WsPrestashop extends GuzzleBasedAbstract
     public function deleteCategory(int $id): void
     {
         $this->deleteResource(self::RESOURCE_CATEGORIES, $id);
+    }
+
+    /**
+     * @return array|Carrier[]
+     */
+    public function getCarriers(): array
+    {
+        return $this->getResources(self::RESOURCE_CARRIERS);
+    }
+
+    /**
+     * @param int $id
+     * @return ModelInterface|Carrier
+     */
+    public function getCarrier(int $id): ?Carrier
+    {
+        return $this->getResource(self::RESOURCE_CARRIERS, $id);
+    }
+
+    /**
+     * @param Carrier $carrier
+     * @return ModelInterface|Carrier
+     * @throws WsException
+     */
+    public function addCarrier(Carrier $carrier): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_CARRIERS, $carrier);
+    }
+
+    /**
+     * @param Carrier $carrier
+     * @return ModelInterface|Carrier
+     * @throws WsException
+     */
+    public function updateCarrier(Carrier $carrier): ModelInterface
+    {
+        return $this->updateResource(self::RESOURCE_CARRIERS, $carrier);
+    }
+
+    public function deleteCarrier(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_CARRIERS, $id);
     }
 
     /**
