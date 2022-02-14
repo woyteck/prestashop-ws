@@ -575,6 +575,12 @@ class WsPrestashop extends GuzzleBasedAbstract
         }
     }
 
+    public function deleteProductImage(int $productId, int $imageId)
+    {
+        $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES) . '/' . $productId . '/' . $imageId;
+        $this->send('delete', $url);
+    }
+
     /**
      * @param int $productId
      * @return array
