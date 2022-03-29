@@ -1337,10 +1337,10 @@ class WsPrestashop extends GuzzleBasedAbstract
     /**
      * @param string $resourceName
      * @param ModelInterface $model
-     * @return ModelInterface
+     * @return ModelInterface|null
      * @throws WsException
      */
-    private function updateResource(string $resourceName, ModelInterface $model): ModelInterface
+    private function updateResource(string $resourceName, ModelInterface $model): ?ModelInterface
     {
         if ($model->getId() === null) {
             throw new WsException('Cannot update, model must have id');
@@ -1350,9 +1350,13 @@ class WsPrestashop extends GuzzleBasedAbstract
         $xml = $model->toXml($blank);
 
         $array = $this->put($resourceName, $xml);
-        $modelClass = self::MODEL[$resourceName];
+        if (is_array($array)) {
+            $modelClass = self::MODEL[$resourceName];
 
-        return $modelClass::fromArray($array[self::SINGLE[$resourceName]]);
+            return $modelClass::fromArray($array[self::SINGLE[$resourceName]]);
+        }
+
+        return null;
     }
 
     private function deleteResource(string $resourceName, int $id): void
