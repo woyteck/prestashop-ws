@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Woyteck\Prestashop;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
@@ -1444,6 +1445,10 @@ class WsPrestashop extends GuzzleBasedAbstract
             ],
             RequestOptions::BODY => $payload->asXML(),
         ]);
+
+        if (!is_array($response->getBody()->getContents())) {
+            throw new Exception('Response is not valid json' . "\n" . var_export($response->getBody()->getContents()));
+        }
 
         return json_decode($response->getBody()->getContents(), true);
     }
