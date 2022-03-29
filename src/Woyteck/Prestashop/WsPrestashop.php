@@ -1337,10 +1337,10 @@ class WsPrestashop extends GuzzleBasedAbstract
     /**
      * @param string $resourceName
      * @param ModelInterface $model
-     * @return ModelInterface|null
+     * @return ModelInterface
      * @throws WsException
      */
-    private function updateResource(string $resourceName, ModelInterface $model): ?ModelInterface
+    private function updateResource(string $resourceName, ModelInterface $model): ModelInterface
     {
         if ($model->getId() === null) {
             throw new WsException('Cannot update, model must have id');
@@ -1350,13 +1350,9 @@ class WsPrestashop extends GuzzleBasedAbstract
         $xml = $model->toXml($blank);
 
         $array = $this->put($resourceName, $xml);
-        if (is_array($array)) {
-            $modelClass = self::MODEL[$resourceName];
+        $modelClass = self::MODEL[$resourceName];
 
-            return $modelClass::fromArray($array[self::SINGLE[$resourceName]]);
-        }
-
-        return null;
+        return $modelClass::fromArray($array[self::SINGLE[$resourceName]]);
     }
 
     private function deleteResource(string $resourceName, int $id): void
@@ -1440,7 +1436,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    private function put(string $resource, SimpleXMLElement $payload): ?array
+    private function put(string $resource, SimpleXMLElement $payload): array
     {
         $response = $this->send('put', $this->constructUrl($resource), [
             RequestOptions::HEADERS => [
@@ -1450,10 +1446,6 @@ class WsPrestashop extends GuzzleBasedAbstract
             RequestOptions::BODY => $payload->asXML(),
         ]);
 
-        if (is_array($response->getBody()->getContents())) {
-            return json_decode($response->getBody()->getContents(), true);
-        }
-
-        return null;
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

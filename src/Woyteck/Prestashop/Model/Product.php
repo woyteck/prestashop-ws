@@ -1506,9 +1506,9 @@ class Product implements ModelInterface
         if ($this->getAvailability() !== null) {
             $xml->product->availability = $this->getAvailability();
         }
-        if ($this->getGmc() !== null) {
-            $xml->product->gmc = $this->getGmc();
-        }
+//        if ($this->getGmc() !== null) {
+//            $xml->product->gmc = $this->getGmc();
+//        }
 
         return $xml;
     }
