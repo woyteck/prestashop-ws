@@ -1436,7 +1436,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    private function put(string $resource, SimpleXMLElement $payload): array
+    private function put(string $resource, SimpleXMLElement $payload): ?array
     {
         $response = $this->send('put', $this->constructUrl($resource), [
             RequestOptions::HEADERS => [
@@ -1446,10 +1446,10 @@ class WsPrestashop extends GuzzleBasedAbstract
             RequestOptions::BODY => $payload->asXML(),
         ]);
 
-        if (!is_array($response->getBody()->getContents())) {
-            throw new Exception('Response is not valid json' . "\n" . var_export($response->getBody()->getContents()));
+        if (is_array($response->getBody()->getContents())) {
+            return json_decode($response->getBody()->getContents(), true);
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return null;
     }
 }
