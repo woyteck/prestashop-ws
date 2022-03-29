@@ -1219,7 +1219,7 @@ class Product implements ModelInterface
             $product->setAvailability($array['availability']);
         }
         if (isset($array['gmc'])) {
-            $product->setGmc($array['gmc']);
+            $product->setGmc((int) $array['gmc']);
         }
 
         return $product;
