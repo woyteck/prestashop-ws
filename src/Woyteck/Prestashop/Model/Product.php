@@ -247,6 +247,9 @@ class Product implements ModelInterface
     /** @var string */
     private $availability;
 
+    /** @var int */
+    private $gmc;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -977,6 +980,16 @@ class Product implements ModelInterface
         $this->availability = $availability;
     }
 
+    public function getGmc(): ?int
+    {
+        return $this->gmc;
+    }
+
+    public function setGmc(int $gmc): void
+    {
+        $this->gmc = $gmc;
+    }
+
     /**
      * @param array $array
      * @return self
@@ -1204,6 +1217,9 @@ class Product implements ModelInterface
         }
         if (isset($array['availability'])) {
             $product->setAvailability($array['availability']);
+        }
+        if (isset($array['gmc'])) {
+            $product->setGmc($array['gmc']);
         }
 
         return $product;
@@ -1489,6 +1505,9 @@ class Product implements ModelInterface
         }
         if ($this->getAvailability() !== null) {
             $xml->product->availability = $this->getAvailability();
+        }
+        if ($this->getGmc() !== null) {
+            $xml->product->gmc = $this->getGmc();
         }
 
         return $xml;
