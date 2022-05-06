@@ -160,6 +160,12 @@ class Order implements ModelInterface
     /** @var string */
     private $deliveryPointPostCode;
 
+    /** @var string */
+    private $targetPoint;
+
+    /** @var string */
+    private $trackingNumber;
+
     /** @var array */
     private $associations;
 
@@ -668,12 +674,29 @@ class Order implements ModelInterface
         return $this->deliveryPointPostCode;
     }
 
-    /**
-     * @param string $deliveryPointPostCode
-     */
     public function setDeliveryPointPostCode(string $deliveryPointPostCode): void
     {
         $this->deliveryPointPostCode = $deliveryPointPostCode;
+    }
+
+    public function getTargetPoint(): ?string
+    {
+        return $this->targetPoint;
+    }
+
+    public function setTargetPoint(string $targetPoint): void
+    {
+        $this->targetPoint = $targetPoint;
+    }
+
+    public function getTrackingNumber(): ?string
+    {
+        return $this->trackingNumber;
+    }
+
+    public function setTrackingNumber(string $trackingNumber): void
+    {
+        $this->trackingNumber = $trackingNumber;
     }
 
     /**
@@ -835,6 +858,12 @@ class Order implements ModelInterface
         if (isset($array['bl_delivery_point_postcode'])) {
             $order->setDeliveryPointPostCode($array['bl_delivery_point_postcode']);
         }
+        if (isset($array['target_point'])) {
+            $order->setTargetPoint($array['target_point']);
+        }
+        if (isset($array['tracking_number'])) {
+            $order->setTrackingNumber($array['tracking_number']);
+        }
         if (isset($array['associations'])) {
             $order->setAssociations($array['associations']);
         }
@@ -988,6 +1017,12 @@ class Order implements ModelInterface
         }
         if ($this->getDeliveryPointPostCode() !== null) {
             $xml->order->bl_delivery_point_postcode = $this->getDeliveryPointPostCode();
+        }
+        if ($this->getTargetPoint() !== null) {
+            $xml->order->target_point = $this->getTargetPoint();
+        }
+        if ($this->getTrackingNumber() !== null) {
+            $xml->order->tracking_number = $this->getTrackingNumber();
         }
 
         return $xml;
