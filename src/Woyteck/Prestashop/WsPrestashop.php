@@ -1253,21 +1253,17 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null): array
     {
-        $url = $this->constructUrl($endpointOverride ?? $resourceName);
+        $params = [];
         if ($filters !== null) {
-            $filtersStrings = [];
             foreach ($filters as $key => $value) {
                 $valueString = $value;
                 if (is_array($value)) {
                     $valueString = '[' . implode('|', $value) . ']';
                 }
-                $filtersStrings[] = "filter[{$key}]={$valueString}";
-            }
-            foreach ($filtersStrings as $key => $filterString) {
-                $url .= $key === 0 ? '?' : '&';
-                $url .= $filterString;
+                $params["filter[{$key}]"] = $valueString;
             }
         }
+        $url = $this->constructUrl($endpointOverride ?? $resourceName, null, null, $params);
 
         $response = $this->getJson($url);
 
