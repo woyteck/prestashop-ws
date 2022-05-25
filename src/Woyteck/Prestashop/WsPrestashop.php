@@ -140,6 +140,9 @@ class WsPrestashop extends GuzzleBasedAbstract
     /** @var string */
     private $key;
 
+    /** @var int */
+    private $languageId = 1;
+
     public function __construct(Client $client, ModelFactory $modelFactory, string $httpScheme, string $url, string $key)
     {
         parent::__construct($client, $modelFactory);
@@ -147,6 +150,11 @@ class WsPrestashop extends GuzzleBasedAbstract
         $this->httpScheme = $httpScheme;
         $this->url = $url;
         $this->key = $key;
+    }
+
+    public function setLanguageId(int $languageId): void
+    {
+        $this->languageId = $languageId;
     }
 
     /**
@@ -1367,6 +1375,8 @@ class WsPrestashop extends GuzzleBasedAbstract
         if ($id !== null) {
             $url .= '/' . $id;
         }
+
+        $url .= '?language=' . $this->languageId;
 
         return $url;
     }
