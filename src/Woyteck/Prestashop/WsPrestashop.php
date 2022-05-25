@@ -528,7 +528,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     public function getProductImage(int $productId, int $imageId): string
     {
-        $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES, $productId) . '/' . $imageId;
+        $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES, $productId, '/' . $imageId);
         $response = $this->send('get', $url);
 
         return $response->getBody()->getContents();
@@ -586,7 +586,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     public function deleteProductImage(int $productId, int $imageId)
     {
-        $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES) . '/' . $productId . '/' . $imageId;
+        $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES, $productId, '/' . $imageId);
         $this->send('delete', $url);
     }
 
@@ -1302,7 +1302,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     {
         $fieldName = urlencode($fieldName);
         $fieldValue = urlencode($fieldValue);
-        $url = $this->constructUrl($resourceName) . "?filter[{$fieldName}]={$fieldValue}";
+        $url = $this->constructUrl($resourceName, null, null, ["filter[{$fieldName}]" => $fieldValue]);
         $array = $this->getJson($url);
         if (!isset($array[$resourceName][0]['id'])) {
             return null;
@@ -1368,7 +1368,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         $this->send('delete', $this->constructUrl($resourceName, $id));
     }
 
-    private function constructUrl(string $resource, int $id = null): string
+    private function constructUrl(string $resource, int $id = null, string $suffix = null, array $params = []): string
     {
         $url = $this->httpScheme . '://' . $this->key . '@' . $this->url . '/' . $resource;
 
@@ -1376,7 +1376,12 @@ class WsPrestashop extends GuzzleBasedAbstract
             $url .= '/' . $id;
         }
 
-        $url .= '?language=' . $this->languageId;
+        if ($suffix !== null) {
+            $url .= $suffix;
+        }
+
+        $params['language'] = $this->languageId;
+        $url .= '?' . http_build_query($params);
 
         return $url;
     }
@@ -1426,7 +1431,7 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function getBlank(string $resource): SimpleXMLElement
     {
-        $url = $this->constructUrl($resource) . '?schema=blank';
+        $url = $this->constructUrl($resource, null, null, ['schema' => 'blank']);
 
         $response = $this->send('get', $url);
 
