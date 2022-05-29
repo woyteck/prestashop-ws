@@ -1416,11 +1416,15 @@ class Product implements ModelInterface
         }
         if ($this->getName() !== null) {
             $xml->product->name->language[0] = $this->getName();
-            $xml->product->name->language[0]->addAttribute('id', '1');
+            if (!isset($xml->product->name->language[0]['id'])) {
+                $xml->product->name->language[0]->addAttribute('id', '1');
+            }
         }
         if ($this->getName(2) !== null) {
             $xml->product->name->language[1] = $this->getName(2);
-            $xml->product->name->language[1]->addAttribute('id', '2');
+            if (!isset($xml->product->name->language[0]['id'])) {
+                $xml->product->name->language[1]->addAttribute('id', '2');
+            }
         }
         if ($this->getDescription() !== null) {
             $xml->product->description->language = $this->getDescription();
