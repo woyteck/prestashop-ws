@@ -20,8 +20,8 @@ class Tax implements ModelInterface
     /** @var bool */
     private $deleted;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
     /**
      * @return int|null
@@ -87,20 +87,14 @@ class Tax implements ModelInterface
         $this->deleted = $deleted;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
     /**
@@ -124,7 +118,13 @@ class Tax implements ModelInterface
             $tax->setDeleted($array['deleted'] === '1');
         }
         if (isset($array['name'])) {
-            $tax->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $tax->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $tax->setName($array['name']);
+            }
         }
 
         return $tax;
@@ -148,8 +148,13 @@ class Tax implements ModelInterface
         if ($this->isDeleted() !== null) {
             $xml->tax->deleted = $this->isDeleted() ? '1' : '0';
         }
-        if ($this->getName() !== null) {
-            $xml->tax->name->language = $this->getName();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->tax->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->product->name->language[$i]['id'])) {
+                $xml->tax->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;
