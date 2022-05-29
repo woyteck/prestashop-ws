@@ -1192,7 +1192,13 @@ class Product implements ModelInterface
             $product->setLinkRewrite($array['link_rewrite']);
         }
         if (isset($array['name'])) {
-            $product->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $product->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $product->setName($array['name']);
+            }
         }
         if (isset($array['description'])) {
             $product->setDescription($array['description']);
