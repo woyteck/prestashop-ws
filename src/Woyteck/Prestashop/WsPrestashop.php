@@ -1376,7 +1376,7 @@ class WsPrestashop extends GuzzleBasedAbstract
             $url .= $suffix;
         }
 
-//        $params['language'] = $this->languageId;
+        $params['language'] = $this->languageId;
         $url .= '?' . http_build_query($params);
 
         return $url;
