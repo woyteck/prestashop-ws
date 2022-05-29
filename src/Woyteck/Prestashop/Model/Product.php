@@ -220,8 +220,8 @@ class Product implements ModelInterface
     /** @var string */
     private $linkRewrite;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
     /** @var string */
     private $description;
@@ -890,14 +890,14 @@ class Product implements ModelInterface
         $this->linkRewrite = $linkRewrite;
     }
 
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
     public function getDescription(): ?string
@@ -1415,7 +1415,12 @@ class Product implements ModelInterface
             $xml->product->link_rewrite->language = $this->getLinkRewrite();
         }
         if ($this->getName() !== null) {
-            $xml->product->name->language = $this->getName();
+            $xml->product->name->language[0] = $this->getName();
+            $xml->product->name->language[0]->addAttribute('id', '1');
+        }
+        if ($this->getName(2) !== null) {
+            $xml->product->name->language[1] = $this->getName(2);
+            $xml->product->name->language[1]->addAttribute('id', '2');
         }
         if ($this->getDescription() !== null) {
             $xml->product->description->language = $this->getDescription();
