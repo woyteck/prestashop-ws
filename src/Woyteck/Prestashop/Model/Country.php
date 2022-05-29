@@ -41,199 +41,127 @@ class Country implements ModelInterface
     /** @var bool */
     private $displayTaxLabel;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return int|null
-     */
     public function getIdZone(): ?int
     {
         return $this->idZone;
     }
 
-    /**
-     * @param int $idZone
-     */
     public function setIdZone(int $idZone): void
     {
         $this->idZone = $idZone;
     }
 
-    /**
-     * @return int|null
-     */
     public function getIdCurrency(): ?int
     {
         return $this->idCurrency;
     }
 
-    /**
-     * @param int $idCurrency
-     */
     public function setIdCurrency(int $idCurrency): void
     {
         $this->idCurrency = $idCurrency;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCallPrefix(): ?string
     {
         return $this->callPrefix;
     }
 
-    /**
-     * @param string $callPrefix
-     */
     public function setCallPrefix(string $callPrefix): void
     {
         $this->callPrefix = $callPrefix;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIsoCode(): ?string
     {
         return $this->isoCode;
     }
 
-    /**
-     * @param string $isoCode
-     */
     public function setIsoCode(string $isoCode): void
     {
         $this->isoCode = $isoCode;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isActive(): ?bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $active
-     */
     public function setActive(bool $active): void
     {
         $this->active = $active;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isContainsStates(): ?bool
     {
         return $this->containsStates;
     }
 
-    /**
-     * @param bool $containsStates
-     */
     public function setContainsStates(bool $containsStates): void
     {
         $this->containsStates = $containsStates;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isNeedIdentificationNumber(): ?bool
     {
         return $this->needIdentificationNumber;
     }
 
-    /**
-     * @param bool $needIdentificationNumber
-     */
     public function setNeedIdentificationNumber(bool $needIdentificationNumber): void
     {
         $this->needIdentificationNumber = $needIdentificationNumber;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isNeedZipCode(): ?bool
     {
         return $this->needZipCode;
     }
 
-    /**
-     * @param bool $needZipCode
-     */
     public function setNeedZipCode(bool $needZipCode): void
     {
         $this->needZipCode = $needZipCode;
     }
 
-    /**
-     * @return string|null
-     */
     public function getZipCodeFormat(): ?string
     {
         return $this->zipCodeFormat;
     }
 
-    /**
-     * @param string $zipCodeFormat
-     */
     public function setZipCodeFormat(string $zipCodeFormat): void
     {
         $this->zipCodeFormat = $zipCodeFormat;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isDisplayTaxLabel(): ?bool
     {
         return $this->displayTaxLabel;
     }
 
-    /**
-     * @param bool $displayTaxLabel
-     */
     public function setDisplayTaxLabel(bool $displayTaxLabel): void
     {
         $this->displayTaxLabel = $displayTaxLabel;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
     /**
@@ -278,7 +206,13 @@ class Country implements ModelInterface
             $country->setDisplayTaxLabel($array['display_tax_label'] === '1');
         }
         if (isset($array['name'])) {
-            $country->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $country->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $country->setName($array['name']);
+            }
         }
 
         return $country;
@@ -323,8 +257,13 @@ class Country implements ModelInterface
         if ($this->isDisplayTaxLabel() !== null) {
             $xml->country->display_tax_label = $this->isDisplayTaxLabel() ? '1' : '0';
         }
-        if ($this->getName() !== null) {
-            $xml->country->name = $this->getName();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->country->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->country->name->language[$i]['id'])) {
+                $xml->country->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;
