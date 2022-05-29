@@ -28,216 +28,143 @@ class Manufacturer implements ModelInterface
     /** @var DateTime */
     private $dateUpd;
 
-    /** @var string */
-    private $description;
+    /** @var string[] */
+    private $description = [];
 
-    /** @var string */
-    private $shortDescription;
+    /** @var string[] */
+    private $shortDescription = [];
 
-    /** @var string */
-    private $metaTitle;
+    /** @var string[] */
+    private $metaTitle = [];
 
-    /** @var string */
-    private $metaDescription;
+    /** @var string[] */
+    private $metaDescription = [];
 
-    /** @var array */
-    private $metaKeywords;
+    /** @var string[] */
+    private $metaKeywords = [];
 
     /** @var array */
     private $associations;
 
-    /**
-     * @return int
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): ?bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $active
-     */
     public function setActive(bool $active): void
     {
         $this->active = $active;
     }
 
-    /**
-     * @return string
-     */
     public function getLinkRewrite(): ?string
     {
         return $this->linkRewrite;
     }
 
-    /**
-     * @param string $linkRewrite
-     */
     public function setLinkRewrite(string $linkRewrite): void
     {
         $this->linkRewrite = $linkRewrite;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDateAdd(): ?DateTime
     {
         return $this->dateAdd;
     }
 
-    /**
-     * @param DateTime $dateAdd
-     */
     public function setDateAdd(DateTime $dateAdd): void
     {
         $this->dateAdd = $dateAdd;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDateUpd(): ?DateTime
     {
         return $this->dateUpd;
     }
 
-    /**
-     * @param DateTime $dateUpd
-     */
     public function setDateUpd(DateTime $dateUpd): void
     {
         $this->dateUpd = $dateUpd;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription(): ?string
+    public function getDescription(int $languageId = 1): ?string
     {
-        return $this->description;
+        return $this->description[$languageId] ?? null;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description): void
+    public function setDescription(string $description, int $languageId = 1): void
     {
-        $this->description = $description;
+        $this->description[$languageId] = $description;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortDescription(): ?string
+    public function getShortDescription(int $languageId = 1): ?string
     {
-        return $this->shortDescription;
+        return $this->shortDescription[$languageId] ?? null;
     }
 
-    /**
-     * @param string $shortDescription
-     */
-    public function setShortDescription(string $shortDescription): void
+    public function setShortDescription(string $shortDescription, int $languageId = 1): void
     {
-        $this->shortDescription = $shortDescription;
+        $this->shortDescription[$languageId] = $shortDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaTitle(): ?string
+    public function getMetaTitle(int $languageId = 1): ?string
     {
-        return $this->metaTitle;
+        return $this->metaTitle[$languageId] ?? null;
     }
 
-    /**
-     * @param string $metaTitle
-     */
-    public function setMetaTitle(string $metaTitle): void
+    public function setMetaTitle(string $metaTitle, int $languageId = 1): void
     {
-        $this->metaTitle = $metaTitle;
+        $this->metaTitle[$languageId] = $metaTitle;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaDescription(): ?string
+    public function getMetaDescription(int $languageId = 1): ?string
     {
-        return $this->metaDescription;
+        return $this->metaDescription[$languageId] ?? null;
     }
 
-    /**
-     * @param string $metaDescription
-     */
-    public function setMetaDescription(string $metaDescription): void
+    public function setMetaDescription(string $metaDescription, int $languageId = 1): void
     {
-        $this->metaDescription = $metaDescription;
+        $this->metaDescription[$languageId] = $metaDescription;
     }
 
-    /**
-     * @return array
-     */
-    public function getMetaKeywords(): ?array
+    public function getMetaKeywords(int $languageId = 1): ?string
     {
-        return $this->metaKeywords;
+        return $this->metaKeywords[$languageId] ?? null;
     }
 
-    /**
-     * @param array $metaKeywords
-     */
-    public function setMetaKeywords(array $metaKeywords): void
+    public function setMetaKeywords(string $metaKeywords, int $languageId = 1): void
     {
-        $this->metaKeywords = $metaKeywords;
+        $this->metaKeywords[$languageId] = $metaKeywords;
     }
 
-    /**
-     * @return array
-     */
     public function getAssociations(): ?array
     {
         return $this->associations;
     }
 
-    /**
-     * @param array $associations
-     */
     public function setAssociations(array $associations): void
     {
         $this->associations = $associations;
     }
-
 
     /**
      * @param array $array
@@ -267,16 +194,40 @@ class Manufacturer implements ModelInterface
             $model->setDateUpd(new DateTime($array['date_upd']));
         }
         if (isset($array['description'])) {
-            $model->setDescription($array['description']);
+            if (is_array($array['description'])) {
+                foreach ($array['description'] as $name) {
+                    $model->setDescription($name['value'], (int) $name['id']);
+                }
+            } else {
+                $model->setDescription($array['description']);
+            }
         }
         if (isset($array['meta_title'])) {
-            $model->setMetaTitle($array['meta_title']);
+            if (is_array($array['meta_title'])) {
+                foreach ($array['meta_title'] as $name) {
+                    $model->setMetaTitle($name['value'], (int) $name['id']);
+                }
+            } else {
+                $model->setMetaTitle($array['meta_title']);
+            }
         }
         if (isset($array['meta_description'])) {
-            $model->setMetaDescription($array['meta_description']);
+            if (is_array($array['meta_description'])) {
+                foreach ($array['meta_description'] as $name) {
+                    $model->setMetaDescription($name['value'], (int) $name['id']);
+                }
+            } else {
+                $model->setMetaDescription($array['meta_description']);
+            }
         }
         if (isset($array['meta_keywords'])) {
-            $model->setMetaKeywords(explode(',', $array['meta_keywords']));
+            if (is_array($array['meta_keywords'])) {
+                foreach ($array['meta_keywords'] as $name) {
+                    $model->setMetaKeywords($name['value'], (int) $name['id']);
+                }
+            } else {
+                $model->setMetaKeywords($array['meta_keywords']);
+            }
         }
         if (isset($array['associations'])) {
             $model->setAssociations($array['associations']);
@@ -300,20 +251,45 @@ class Manufacturer implements ModelInterface
         if ($this->getName() !== null) {
             $xml->manufacturer->name = $this->getName();
         }
-        if ($this->getDescription() !== null) {
-            $xml->manufacturer->description->language = $this->getDescription();
+        $i = 0;
+        foreach ($this->description as $languageId => $value) {
+            $xml->manufacturer->description->language[$i] = $this->getDescription($languageId);
+            if (!isset($xml->manufacturer->description->language[$i]['id'])) {
+                $xml->manufacturer->description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getShortDescription() !== null) {
-            $xml->manufacturer->short_description->language = $this->getShortDescription();
+        $i = 0;
+        foreach ($this->shortDescription as $languageId => $value) {
+            $xml->manufacturer->short_description->language[$i] = $this->getShortDescription($languageId);
+            if (!isset($xml->manufacturer->short_description->language[$i]['id'])) {
+                $xml->manufacturer->short_description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaTitle() !== null) {
-            $xml->manufacturer->meta_title->language = $this->getMetaTitle();
+        $i = 0;
+        foreach ($this->metaTitle as $languageId => $value) {
+            $xml->manufacturer->meta_title->language[$i] = $this->getMetaTitle($languageId);
+            if (!isset($xml->manufacturer->meta_title->language[$i]['id'])) {
+                $xml->manufacturer->meta_title->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaDescription() !== null) {
-            $xml->manufacturer->meta_description->language = $this->getMetaDescription();
+        $i = 0;
+        foreach ($this->metaDescription as $languageId => $value) {
+            $xml->manufacturer->meta_description->language[$i] = $this->getMetaDescription($languageId);
+            if (!isset($xml->manufacturer->meta_description->language[$i]['id'])) {
+                $xml->manufacturer->meta_description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaKeywords() !== null) {
-            $xml->manufacturer->meta_keywords->language = implode(',', $this->getMetaKeywords());
+        $i = 0;
+        foreach ($this->metaKeywords as $languageId => $value) {
+            $xml->manufacturer->meta_keywords->language[$i] = $this->getMetaKeywords($languageId);
+            if (!isset($xml->manufacturer->meta_keywords->language[$i]['id'])) {
+                $xml->manufacturer->meta_keywords->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;

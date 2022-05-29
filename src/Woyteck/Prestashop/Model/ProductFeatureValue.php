@@ -17,71 +17,47 @@ class ProductFeatureValue implements ModelInterface
     /** @var bool */
     private $custom;
 
-    /** @var string */
-    private $value;
+    /** @var string[] */
+    private $value = [];
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return int|null
-     */
     public function getIdFeature(): ?int
     {
         return $this->idFeature;
     }
 
-    /**
-     * @param int $idFeature
-     */
     public function setIdFeature(int $idFeature): void
     {
         $this->idFeature = $idFeature;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isCustom(): ?bool
     {
         return $this->custom;
     }
 
-    /**
-     * @param bool $custom
-     */
     public function setCustom(bool $custom): void
     {
         $this->custom = $custom;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getValue(): ?string
+    public function getValue(int $languageId = 1): ?string
     {
-        return $this->value;
+        return $this->value[$languageId] ?? null;
     }
 
-    /**
-     * @param string $value
-     */
-    public function setValue(string $value): void
+    public function setValue(string $value, int $languageId = 1): void
     {
-        $this->value = $value;
+        $this->value[$languageId] = $value;
     }
 
     /**
@@ -102,7 +78,13 @@ class ProductFeatureValue implements ModelInterface
             $productFeatureValue->setCustom($array['custom'] === '1');
         }
         if (isset($array['value'])) {
-            $productFeatureValue->setValue($array['value']);
+            if (is_array($array['value'])) {
+                foreach ($array['value'] as $name) {
+                    $productFeatureValue->setValue($name['value'], (int) $name['id']);
+                }
+            } else {
+                $productFeatureValue->setValue($array['value']);
+            }
         }
 
         return $productFeatureValue;
@@ -123,8 +105,13 @@ class ProductFeatureValue implements ModelInterface
         if ($this->isCustom() !== null) {
             $xml->product_feature_value->custom = $this->isCustom() ? '1' : '0';
         }
-        if ($this->getValue() !== null) {
-            $xml->product_feature_value->value->language = $this->getValue();
+        $i = 0;
+        foreach ($this->value as $languageId => $value) {
+            $xml->product_feature_value->value->language[$i] = $this->getValue($languageId);
+            if (!isset($xml->product_feature_value->value->language[$i]['id'])) {
+                $xml->product_feature_value->value->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;

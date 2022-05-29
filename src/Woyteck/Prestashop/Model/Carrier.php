@@ -70,8 +70,8 @@ class Carrier implements ModelInterface
     /** @var int */
     private $position;
 
-    /** @var string */
-    private $delay;
+    /** @var string[] */
+    private $delay = [];
 
     public function getId(): ?int
     {
@@ -273,14 +273,14 @@ class Carrier implements ModelInterface
         $this->position = $position;
     }
 
-    public function getDelay(): ?string
+    public function getDelay(int $languageId = 1): ?string
     {
-        return $this->delay;
+        return $this->delay[$languageId] ?? null;
     }
 
-    public function setDelay(string $delay): void
+    public function setDelay(string $delay, int $languageId = 1): void
     {
-        $this->delay = $delay;
+        $this->delay[$languageId] = $delay;
     }
 
     /**
@@ -353,7 +353,13 @@ class Carrier implements ModelInterface
             $carrier->setPosition((int) $array['position']);
         }
         if (isset($array['delay'])) {
-            $carrier->setDelay($array['delay']);
+            if (is_array($array['delay'])) {
+                foreach ($array['delay'] as $name) {
+                    $carrier->setDelay($name['value'], (int) $name['id']);
+                }
+            } else {
+                $carrier->setDelay($array['delay']);
+            }
         }
 
         return $carrier;
@@ -425,8 +431,13 @@ class Carrier implements ModelInterface
         if ($this->getPosition() !== null) {
             $xml->carrier->position = $this->getPosition();
         }
-        if ($this->getDelay() !== null) {
-            $xml->carrier->delay->language = $this->getDelay();
+        $i = 0;
+        foreach ($this->delay as $languageId => $value) {
+            $xml->carrier->delay->language[$i] = $this->getDelay($languageId);
+            if (!isset($xml->carrier->delay->language[$i]['id'])) {
+                $xml->carrier->delay->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;

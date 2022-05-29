@@ -141,7 +141,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     private $key;
 
     /** @var int */
-    private $languageId = 1;
+    private $languageId;
 
     public function __construct(Client $client, ModelFactory $modelFactory, string $httpScheme, string $url, string $key)
     {
@@ -1376,7 +1376,9 @@ class WsPrestashop extends GuzzleBasedAbstract
             $url .= $suffix;
         }
 
-        $params['language'] = $this->languageId;
+        if ($this->languageId !== null) {
+            $params['language'] = $this->languageId;
+        }
         $url .= '?' . http_build_query($params);
 
         return $url;

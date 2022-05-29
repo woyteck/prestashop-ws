@@ -118,11 +118,11 @@ class Product implements ModelInterface
     /** @var bool */
     private $additionalDeliveryTimes;
 
-    /** @var string */
-    private $deliveryInStock;
+    /** @var string[] */
+    private $deliveryInStock = [];
 
-    /** @var string */
-    private $deliveryOutStock;
+    /** @var string[] */
+    private $deliveryOutStock = [];
 
     /** @var bool */
     private $onSale;
@@ -208,32 +208,32 @@ class Product implements ModelInterface
     /** @var int */
     private $packStockType;
 
-    /** @var string */
-    private $metaDescription;
+    /** @var string[] */
+    private $metaDescription = [];
 
-    /** @var array */
-    private $metaKeywords;
+    /** @var string[] */
+    private $metaKeywords = [];
 
-    /** @var string */
-    private $metaTitle;
+    /** @var string[] */
+    private $metaTitle = [];
 
-    /** @var string */
-    private $linkRewrite;
+    /** @var string[] */
+    private $linkRewrite = [];
 
     /** @var string[] */
     private $name = [];
 
-    /** @var string */
-    private $description;
+    /** @var string[] */
+    private $description = [];
 
-    /** @var string */
-    private $descriptionShort;
+    /** @var string[] */
+    private $descriptionShort = [];
 
-    /** @var string */
-    private $availableNow;
+    /** @var string[] */
+    private $availableNow = [];
 
-    /** @var string */
-    private $availableLater;
+    /** @var string[] */
+    private $availableLater = [];
 
     /** @var array */
     private $associations;
@@ -550,24 +550,24 @@ class Product implements ModelInterface
         $this->additionalDeliveryTimes = $additionalDeliveryTimes;
     }
 
-    public function getDeliveryInStock(): ?string
+    public function getDeliveryInStock(int $languageId = 1): ?string
     {
-        return $this->deliveryInStock;
+        return $this->deliveryInStock[$languageId] ?? null;
     }
 
-    public function setDeliveryInStock(string $deliveryInStock): void
+    public function setDeliveryInStock(string $deliveryInStock, int $languageId = 1): void
     {
-        $this->deliveryInStock = $deliveryInStock;
+        $this->deliveryInStock[$languageId] = $deliveryInStock;
     }
 
-    public function getDeliveryOutStock(): ?string
+    public function getDeliveryOutStock(int $languageId = 1): ?string
     {
-        return $this->deliveryOutStock;
+        return $this->deliveryOutStock[$languageId] ?? null;
     }
 
-    public function setDeliveryOutStock(string $deliveryOutStock): void
+    public function setDeliveryOutStock(string $deliveryOutStock, int $languageId = 1): void
     {
-        $this->deliveryOutStock = $deliveryOutStock;
+        $this->deliveryOutStock[$languageId] = $deliveryOutStock;
     }
 
     public function isOnSale(): ?bool
@@ -850,44 +850,44 @@ class Product implements ModelInterface
         $this->packStockType = $packStockType;
     }
 
-    public function getMetaDescription(): ?string
+    public function getMetaDescription(int $languageId = 1): ?string
     {
-        return $this->metaDescription;
+        return $this->metaDescription[$languageId] ?? null;
     }
 
-    public function setMetaDescription(string $metaDescription): void
+    public function setMetaDescription(string $metaDescription, int $languageId = 1): void
     {
-        $this->metaDescription = $metaDescription;
+        $this->metaDescription[$languageId] = $metaDescription;
     }
 
-    public function getMetaKeywords(): ?array
+    public function getMetaKeywords(int $languageId = 1): ?string
     {
-        return $this->metaKeywords;
+        return $this->metaKeywords[$languageId] ?? null;
     }
 
-    public function setMetaKeywords(array $metaKeywords): void
+    public function setMetaKeywords(string $metaKeywords, int $languageId = 1): void
     {
-        $this->metaKeywords = $metaKeywords;
+        $this->metaKeywords[$languageId] = $metaKeywords;
     }
 
-    public function getMetaTitle(): ?string
+    public function getMetaTitle(int $languageId = 1): ?string
     {
-        return $this->metaTitle;
+        return $this->metaTitle[$languageId] ?? null;
     }
 
-    public function setMetaTitle(string $metaTitle): void
+    public function setMetaTitle(string $metaTitle, int $languageId = 1): void
     {
-        $this->metaTitle = $metaTitle;
+        $this->metaTitle[$languageId] = $metaTitle;
     }
 
-    public function getLinkRewrite(): ?string
+    public function getLinkRewrite(int $languageId = 1): ?string
     {
-        return $this->linkRewrite;
+        return $this->linkRewrite[$languageId] ?? null;
     }
 
-    public function setLinkRewrite(string $linkRewrite): void
+    public function setLinkRewrite(string $linkRewrite, int $languageId = 1): void
     {
-        $this->linkRewrite = $linkRewrite;
+        $this->linkRewrite[$languageId] = $linkRewrite;
     }
 
     public function getName(int $languageId = 1): ?string
@@ -900,44 +900,44 @@ class Product implements ModelInterface
         $this->name[$languageId] = $name;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(int $languageId = 1): ?string
     {
-        return $this->description;
+        return $this->description[$languageId] ?? null;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(string $description, int $languageId = 1): void
     {
-        $this->description = $description;
+        $this->description[$languageId] = $description;
     }
 
-    public function getDescriptionShort(): ?string
+    public function getDescriptionShort(int $languageId = 1): ?string
     {
-        return $this->descriptionShort;
+        return $this->descriptionShort[$languageId] ?? null;
     }
 
-    public function setDescriptionShort(string $descriptionShort): void
+    public function setDescriptionShort(string $descriptionShort, int $languageId = 1): void
     {
-        $this->descriptionShort = $descriptionShort;
+        $this->descriptionShort[$languageId] = $descriptionShort;
     }
 
-    public function getAvailableNow(): ?string
+    public function getAvailableNow(int $languageId = 1): ?string
     {
-        return $this->availableNow;
+        return $this->availableNow[$languageId] ?? null;
     }
 
-    public function setAvailableNow(string $availableNow): void
+    public function setAvailableNow(string $availableNow, int $languageId = 1): void
     {
-        $this->availableNow = $availableNow;
+        $this->availableNow[$languageId] = $availableNow;
     }
 
-    public function getAvailableLater(): ?string
+    public function getAvailableLater(int $languageId = 1): ?string
     {
-        return $this->availableLater;
+        return $this->availableLater[$languageId] ?? null;
     }
 
-    public function setAvailableLater(string $availableLater): void
+    public function setAvailableLater(string $availableLater, int $languageId = 1): void
     {
-        $this->availableLater = $availableLater;
+        $this->availableLater[$languageId] = $availableLater;
     }
 
     public function getAssociations(): ?array
@@ -1090,10 +1090,22 @@ class Product implements ModelInterface
             $product->setAdditionalDeliveryTimes((int) $array['additional_delivery_times'] === 1);
         }
         if (isset($array['delivery_in_stock'])) {
-            $product->setDeliveryInStock($array['delivery_in_stock']);
+            if (is_array($array['delivery_in_stock'])) {
+                foreach ($array['delivery_in_stock'] as $item) {
+                    $product->setDeliveryInStock($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setDeliveryInStock($array['delivery_in_stock']);
+            }
         }
         if (isset($array['delivery_out_stock'])) {
-            $product->setDeliveryOutStock($array['delivery_out_stock']);
+            if (is_array($array['delivery_out_stock'])) {
+                foreach ($array['delivery_out_stock'] as $item) {
+                    $product->setDeliveryOutStock($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setDeliveryOutStock($array['delivery_out_stock']);
+            }
         }
         if (isset($array['on_sale'])) {
             $product->setOnSale((int) $array['on_sale'] === 1);
@@ -1180,37 +1192,85 @@ class Product implements ModelInterface
             $product->setPackStockType((int) $array['pack_stock_type']);
         }
         if (isset($array['meta_description'])) {
-            $product->setMetaDescription($array['meta_description']);
+            if (is_array($array['meta_description'])) {
+                foreach ($array['meta_description'] as $item) {
+                    $product->setMetaDescription($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setMetaDescription($array['meta_description']);
+            }
         }
         if (isset($array['meta_keywords'])) {
-            $product->setMetaKeywords(explode(',', $array['meta_keywords']));
+            if (is_array($array['meta_keywords'])) {
+                foreach ($array['meta_keywords'] as $item) {
+                    $product->setMetaKeywords($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setMetaKeywords($array['meta_keywords']);
+            }
         }
         if (isset($array['meta_title'])) {
-            $product->setMetaTitle($array['meta_title']);
+            if (is_array($array['meta_title'])) {
+                foreach ($array['meta_title'] as $item) {
+                    $product->setMetaTitle($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setMetaTitle($array['meta_title']);
+            }
         }
         if (isset($array['link_rewrite'])) {
-            $product->setLinkRewrite($array['link_rewrite']);
+            if (is_array($array['link_rewrite'])) {
+                foreach ($array['link_rewrite'] as $item) {
+                    $product->setLinkRewrite($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setLinkRewrite($array['link_rewrite']);
+            }
         }
         if (isset($array['name'])) {
             if (is_array($array['name'])) {
-                foreach ($array['name'] as $name) {
-                    $product->setName($name['value'], (int) $name['id']);
+                foreach ($array['name'] as $item) {
+                    $product->setName($item['value'], (int) $item['id']);
                 }
             } else {
                 $product->setName($array['name']);
             }
         }
         if (isset($array['description'])) {
-            $product->setDescription($array['description']);
+            if (is_array($array['description'])) {
+                foreach ($array['description'] as $item) {
+                    $product->setDescription($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setDescription($array['description']);
+            }
         }
         if (isset($array['description_short'])) {
-            $product->setDescriptionShort($array['description_short']);
+            if (is_array($array['description_short'])) {
+                foreach ($array['description_short'] as $item) {
+                    $product->setDescriptionShort($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setDescriptionShort($array['description_short']);
+            }
         }
         if (isset($array['available_now'])) {
-            $product->setAvailableNow($array['available_now']);
+            if (is_array($array['available_now'])) {
+                foreach ($array['available_now'] as $item) {
+                    $product->setAvailableNow($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setAvailableNow($array['available_now']);
+            }
         }
         if (isset($array['available_later'])) {
-            $product->setAvailableLater($array['available_later']);
+            if (is_array($array['available_later'])) {
+                foreach ($array['available_later'] as $item) {
+                    $product->setAvailableLater($item['value'], (int) $item['id']);
+                }
+            } else {
+                $product->setAvailableLater($array['available_later']);
+            }
         }
         if (isset($array['associations'])) {
             $product->setAssociations($array['associations']);
@@ -1321,11 +1381,21 @@ class Product implements ModelInterface
         if ($this->isAdditionalDeliveryTimes() !== null) {
             $xml->product->additional_delivery_times = $this->isAdditionalDeliveryTimes() ? '1' : '0';
         }
-        if ($this->getDeliveryInStock() !== null) {
-            $xml->product->delivery_in_stock->language = $this->getDeliveryInStock();
+        $i = 0;
+        foreach ($this->deliveryInStock as $languageId => $value) {
+            $xml->product->delivery_in_stock->language[$i] = $this->getDeliveryInStock($languageId);
+            if (!isset($xml->product->delivery_in_stock->language[$i]['id'])) {
+                $xml->product->delivery_in_stock->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getDeliveryOutStock() !== null) {
-            $xml->product->delivery_out_stock->language = $this->getDeliveryOutStock();
+        $i = 0;
+        foreach ($this->deliveryOutStock as $languageId => $value) {
+            $xml->product->delivery_out_stock->language[$i] = $this->getDeliveryOutStock($languageId);
+            if (!isset($xml->product->delivery_out_stock->language[$i]['id'])) {
+                $xml->product->delivery_out_stock->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
         if ($this->isOnSale() !== null) {
             $xml->product->on_sale = $this->isOnSale() ? '1' : '0';
@@ -1408,41 +1478,77 @@ class Product implements ModelInterface
         if ($this->getPackStockType() !== null) {
             $xml->product->pack_stock_type = $this->getPackStockType();
         }
-        if ($this->getMetaDescription() !== null) {
-            $xml->product->meta_description->language = $this->getMetaDescription();
-        }
-        if ($this->getMetaKeywords() !== null) {
-            $xml->product->meta_keywords->language = implode(',', $this->getMetaKeywords());
-        }
-        if ($this->getMetaTitle() !== null) {
-            $xml->product->meta_title->language = $this->getMetaTitle();
-        }
-        if ($this->getLinkRewrite() !== null) {
-            $xml->product->link_rewrite->language = $this->getLinkRewrite();
-        }
-        if ($this->getName() !== null) {
-            $xml->product->name->language[0] = $this->getName();
-            if (!isset($xml->product->name->language[0]['id'])) {
-                $xml->product->name->language[0]->addAttribute('id', '1');
+        $i = 0;
+        foreach ($this->metaDescription as $languageId => $value) {
+            $xml->product->meta_description->language[$i] = $this->getMetaDescription($languageId);
+            if (!isset($xml->product->meta_description->language[$i]['id'])) {
+                $xml->product->meta_description->language[$i]->addAttribute('id', (string) $languageId);
             }
+            $i++;
         }
-        if ($this->getName(2) !== null) {
-            $xml->product->name->language[1] = $this->getName(2);
-            if (!isset($xml->product->name->language[1]['id'])) {
-                $xml->product->name->language[1]->addAttribute('id', '2');
+        $i = 0;
+        foreach ($this->metaKeywords as $languageId => $value) {
+            $xml->product->meta_keywords->language[$i] = $this->getMetaKeywords($languageId);
+            if (!isset($xml->product->meta_keywords->language[$i]['id'])) {
+                $xml->product->meta_keywords->language[$i]->addAttribute('id', (string) $languageId);
             }
+            $i++;
         }
-        if ($this->getDescription() !== null) {
-            $xml->product->description->language = $this->getDescription();
+        $i = 0;
+        foreach ($this->metaTitle as $languageId => $value) {
+            $xml->product->meta_title->language[$i] = $this->getMetaTitle($languageId);
+            if (!isset($xml->product->meta_title->language[$i]['id'])) {
+                $xml->product->meta_title->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getDescriptionShort() !== null) {
-            $xml->product->description_short->language = $this->getDescriptionShort();
+        $i = 0;
+        foreach ($this->linkRewrite as $languageId => $value) {
+            $xml->product->link_rewrite->language[$i] = $this->getLinkRewrite($languageId);
+            if (!isset($xml->product->link_rewrite->language[$i]['id'])) {
+                $xml->product->link_rewrite->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getAvailableNow() !== null) {
-            $xml->product->available_now->language = $this->getAvailableNow();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->product->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->product->name->language[$i]['id'])) {
+                $xml->product->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getAvailableLater() !== null) {
-            $xml->product->available_later->language = $this->getAvailableLater();
+        $i = 0;
+        foreach ($this->description as $languageId => $value) {
+            $xml->product->description->language[$i] = $this->getDescription($languageId);
+            if (!isset($xml->product->description->language[$i]['id'])) {
+                $xml->product->description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
+        }
+        $i = 0;
+        foreach ($this->descriptionShort as $languageId => $value) {
+            $xml->product->description_short->language[$i] = $this->getDescriptionShort($languageId);
+            if (!isset($xml->product->description_short->language[$i]['id'])) {
+                $xml->product->description_short->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
+        }
+        $i = 0;
+        foreach ($this->availableNow as $languageId => $value) {
+            $xml->product->available_now->language[$i] = $this->getAvailableNow($languageId);
+            if (!isset($xml->product->available_now->language[$i]['id'])) {
+                $xml->product->available_now->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
+        }
+        $i = 0;
+        foreach ($this->availableLater as $languageId => $value) {
+            $xml->product->available_later->language[$i] = $this->getAvailableLater($languageId);
+            if (!isset($xml->product->available_later->language[$i]['id'])) {
+                $xml->product->available_later->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
         if ($this->getAssociations() !== null) {
             unset($xml->product->associations->categories);

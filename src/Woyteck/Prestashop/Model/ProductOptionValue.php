@@ -20,8 +20,8 @@ class ProductOptionValue implements ModelInterface
     /** @var int */
     private $position;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
     public function getId(): ?int
     {
@@ -63,14 +63,14 @@ class ProductOptionValue implements ModelInterface
         $this->position = $position;
     }
 
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
     /**
@@ -91,7 +91,13 @@ class ProductOptionValue implements ModelInterface
             $productOptionValue->setColor($array['color']);
         }
         if (isset($array['name'])) {
-            $productOptionValue->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $productOptionValue->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $productOptionValue->setName($array['name']);
+            }
         }
 
         return $productOptionValue;
@@ -112,8 +118,13 @@ class ProductOptionValue implements ModelInterface
         if ($this->getColor() !== null) {
             $xml->product_option_value->color = $this->getColor();
         }
-        if ($this->getName() !== null) {
-            $xml->product_option_value->name->language = $this->getName();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->product_option_value->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->product_option_value->name->language[$i]['id'])) {
+                $xml->product_option_value->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;

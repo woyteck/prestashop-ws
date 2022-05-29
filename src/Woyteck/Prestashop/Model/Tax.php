@@ -151,7 +151,7 @@ class Tax implements ModelInterface
         $i = 0;
         foreach ($this->name as $languageId => $value) {
             $xml->tax->name->language[$i] = $this->getName($languageId);
-            if (!isset($xml->product->name->language[$i]['id'])) {
+            if (!isset($xml->tax->name->language[$i]['id'])) {
                 $xml->tax->name->language[$i]->addAttribute('id', (string) $languageId);
             }
             $i++;

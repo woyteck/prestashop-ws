@@ -23,11 +23,11 @@ class ProductOption implements ModelInterface
     /** @var int */
     private $position;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
-    /** @var string */
-    private $publicName;
+    /** @var string[] */
+    private $publicName = [];
 
     public function getId(): ?int
     {
@@ -69,24 +69,24 @@ class ProductOption implements ModelInterface
         $this->position = $position;
     }
 
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
-    public function getPublicName(): ?string
+    public function getPublicName(int $languageId = 1): ?string
     {
-        return $this->publicName;
+        return $this->publicName[$languageId] ?? null;
     }
 
-    public function setPublicName(string $publicName): void
+    public function setPublicName(string $publicName, int $languageId = 1): void
     {
-        $this->publicName = $publicName;
+        $this->publicName[$languageId] = $publicName;
     }
 
     /**
@@ -110,10 +110,22 @@ class ProductOption implements ModelInterface
             $productOption->setPosition((int) $array['position']);
         }
         if (isset($array['name'])) {
-            $productOption->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $productOption->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $productOption->setName($array['name']);
+            }
         }
         if (isset($array['public_name'])) {
-            $productOption->setPublicName($array['public_name']);
+            if (is_array($array['public_name'])) {
+                foreach ($array['public_name'] as $name) {
+                    $productOption->setPublicName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $productOption->setPublicName($array['public_name']);
+            }
         }
 
         return $productOption;
@@ -137,11 +149,21 @@ class ProductOption implements ModelInterface
         if ($this->getPosition() !== null) {
             $xml->product_option->position = $this->getPosition();
         }
-        if ($this->getName() !== null) {
-            $xml->product_option->name->language = $this->getName();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->product_option->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->product_option->name->language[$i]['id'])) {
+                $xml->product_option->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getPublicName() !== null) {
-            $xml->product_option->public_name->language = $this->getPublicName();
+        $i = 0;
+        foreach ($this->publicName as $languageId => $value) {
+            $xml->product_option->public_name->language[$i] = $this->getPublicName($languageId);
+            if (!isset($xml->product_option->public_name->language[$i]['id'])) {
+                $xml->product_option->public_name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;

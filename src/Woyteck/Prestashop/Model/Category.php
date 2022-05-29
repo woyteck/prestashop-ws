@@ -40,23 +40,23 @@ class Category implements ModelInterface
     /** @var DateTime */
     private $dateUpd;
 
-    /** @var string */
-    private $name;
+    /** @var string[] */
+    private $name = [];
 
-    /** @var string */
-    private $linkRewrite;
+    /** @var string[] */
+    private $linkRewrite = [];
 
-    /** @var string */
-    private $description;
+    /** @var string[] */
+    private $description = [];
 
-    /** @var string */
-    private $metaTitle;
+    /** @var string[] */
+    private $metaTitle = [];
 
-    /** @var string */
-    private $metaDescription;
+    /** @var string[] */
+    private $metaDescription = [];
 
-    /** @var array */
-    private $metaKeywords;
+    /** @var string[] */
+    private $metaKeywords = [];
 
     /** @var array */
     private $associations;
@@ -161,64 +161,64 @@ class Category implements ModelInterface
         $this->dateUpd = $dateUpd;
     }
 
-    public function getName(): ?string
+    public function getName(int $languageId = 1): ?string
     {
-        return $this->name;
+        return $this->name[$languageId] ?? null;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name, int $languageId = 1): void
     {
-        $this->name = $name;
+        $this->name[$languageId] = $name;
     }
 
-    public function getLinkRewrite(): ?string
+    public function getLinkRewrite(int $languageId = 1): ?string
     {
-        return $this->linkRewrite;
+        return $this->linkRewrite[$languageId] ?? null;
     }
 
-    public function setLinkRewrite(string $linkRewrite): void
+    public function setLinkRewrite(string $linkRewrite, int $languageId = 1): void
     {
-        $this->linkRewrite = $linkRewrite;
+        $this->linkRewrite[$languageId] = $linkRewrite;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(int $languageId = 1): ?string
     {
-        return $this->description;
+        return $this->description[$languageId] ?? null;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(string $description, int $languageId = 1): void
     {
-        $this->description = $description;
+        $this->description[$languageId] = $description;
     }
 
-    public function getMetaTitle(): ?string
+    public function getMetaTitle(int $languageId = 1): ?string
     {
-        return $this->metaTitle;
+        return $this->metaTitle[$languageId] ?? null;
     }
 
-    public function setMetaTitle(string $metaTitle): void
+    public function setMetaTitle(string $metaTitle, int $languageId = 1): void
     {
-        $this->metaTitle = $metaTitle;
+        $this->metaTitle[$languageId] = $metaTitle;
     }
 
-    public function getMetaDescription(): ?string
+    public function getMetaDescription(int $languageId = 1): ?string
     {
-        return $this->metaDescription;
+        return $this->metaDescription[$languageId] ?? null;
     }
 
-    public function setMetaDescription(string $metaDescription): void
+    public function setMetaDescription(string $metaDescription, int $languageId = 1): void
     {
-        $this->metaDescription = $metaDescription;
+        $this->metaDescription[$languageId] = $metaDescription;
     }
 
-    public function getMetaKeywords(): ?array
+    public function getMetaKeywords(int $languageId = 1): ?string
     {
-        return $this->metaKeywords;
+        return $this->metaKeywords[$languageId] ?? null;
     }
 
-    public function setMetaKeywords(array $metaKeywords): void
+    public function setMetaKeywords(string $metaKeywords, int $languageId = 1): void
     {
-        $this->metaKeywords = $metaKeywords;
+        $this->metaKeywords[$languageId] = $metaKeywords;
     }
 
     public function getAssociations(): ?array
@@ -270,22 +270,58 @@ class Category implements ModelInterface
             $category->setDateUpd(new DateTime($array['date_upd']));
         }
         if (isset($array['name'])) {
-            $category->setName($array['name']);
+            if (is_array($array['name'])) {
+                foreach ($array['name'] as $name) {
+                    $category->setName($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setName($array['name']);
+            }
         }
         if (isset($array['link_rewrite'])) {
-            $category->setLinkRewrite($array['link_rewrite']);
+            if (is_array($array['link_rewrite'])) {
+                foreach ($array['link_rewrite'] as $name) {
+                    $category->setLinkRewrite($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setLinkRewrite($array['link_rewrite']);
+            }
         }
         if (isset($array['description'])) {
-            $category->setDescription($array['description']);
+            if (is_array($array['link_rewrite'])) {
+                foreach ($array['link_rewrite'] as $name) {
+                    $category->setDescription($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setDescription($array['link_rewrite']);
+            }
         }
         if (isset($array['meta_title'])) {
-            $category->setMetaTitle($array['meta_title']);
+            if (is_array($array['meta_title'])) {
+                foreach ($array['meta_title'] as $name) {
+                    $category->setMetaTitle($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setMetaTitle($array['meta_title']);
+            }
         }
         if (isset($array['meta_description'])) {
-            $category->setMetaDescription($array['meta_description']);
+            if (is_array($array['meta_description'])) {
+                foreach ($array['meta_description'] as $name) {
+                    $category->setMetaDescription($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setMetaDescription($array['meta_description']);
+            }
         }
         if (isset($array['meta_keywords'])) {
-            $category->setMetaKeywords(explode(',', $array['meta_keywords']));
+            if (is_array($array['meta_keywords'])) {
+                foreach ($array['meta_keywords'] as $name) {
+                    $category->setMetaKeywords($name['value'], (int) $name['id']);
+                }
+            } else {
+                $category->setMetaKeywords($array['meta_keywords']);
+            }
         }
         if (isset($array['associations'])) {
             $category->setAssociations($array['associations']);
@@ -318,23 +354,53 @@ class Category implements ModelInterface
         if ($this->getPosition() !== null) {
             $xml->category->position = $this->getPosition();
         }
-        if ($this->getName() !== null) {
-            $xml->category->name->language = $this->getName();
+        $i = 0;
+        foreach ($this->name as $languageId => $value) {
+            $xml->category->name->language[$i] = $this->getName($languageId);
+            if (!isset($xml->category->name->language[$i]['id'])) {
+                $xml->category->name->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getLinkRewrite() !== null) {
-            $xml->category->link_rewrite->language = $this->getLinkRewrite();
+        $i = 0;
+        foreach ($this->linkRewrite as $languageId => $value) {
+            $xml->category->link_rewrite->language[$i] = $this->getLinkRewrite($languageId);
+            if (!isset($xml->category->link_rewrite->language[$i]['id'])) {
+                $xml->category->link_rewrite->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getDescription() !== null) {
-            $xml->category->description->language = $this->getDescription();
+        $i = 0;
+        foreach ($this->description as $languageId => $value) {
+            $xml->category->description->language[$i] = $this->getDescription($languageId);
+            if (!isset($xml->category->description->language[$i]['id'])) {
+                $xml->category->description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaTitle() !== null) {
-            $xml->category->meta_title->language = $this->getMetaTitle();
+        $i = 0;
+        foreach ($this->metaTitle as $languageId => $value) {
+            $xml->category->meta_title->language[$i] = $this->getMetaTitle($languageId);
+            if (!isset($xml->category->meta_title->language[$i]['id'])) {
+                $xml->category->meta_title->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaDescription() !== null) {
-            $xml->category->meta_description->language = $this->getMetaDescription();
+        $i = 0;
+        foreach ($this->metaDescription as $languageId => $value) {
+            $xml->category->meta_description->language[$i] = $this->getMetaDescription($languageId);
+            if (!isset($xml->category->meta_description->language[$i]['id'])) {
+                $xml->category->meta_description->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
-        if ($this->getMetaKeywords() !== null) {
-            $xml->category->meta_keywords->language = implode(',', $this->getMetaKeywords());
+        $i = 0;
+        foreach ($this->metaKeywords as $languageId => $value) {
+            $xml->category->meta_keywords->language[$i] = $this->getMetaKeywords($languageId);
+            if (!isset($xml->category->meta_keywords->language[$i]['id'])) {
+                $xml->category->meta_keywords->language[$i]->addAttribute('id', (string) $languageId);
+            }
+            $i++;
         }
 
         return $xml;
