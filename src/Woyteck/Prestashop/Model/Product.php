@@ -1422,7 +1422,7 @@ class Product implements ModelInterface
         }
         if ($this->getName(2) !== null) {
             $xml->product->name->language[1] = $this->getName(2);
-            if (!isset($xml->product->name->language[0]['id'])) {
+            if (!isset($xml->product->name->language[1]['id'])) {
                 $xml->product->name->language[1]->addAttribute('id', '2');
             }
         }
