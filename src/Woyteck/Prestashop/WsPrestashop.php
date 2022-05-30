@@ -1448,7 +1448,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         $response = $this->send('get', $url);
 
         $item = $response->getBody()->getContents();
-        $this->cacheSet($cacheKey, $item);
+        $this->cacheSet($cacheKey, $item, 3600);
 
         return new SimpleXMLElement($item);
     }
@@ -1493,12 +1493,12 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $item;
     }
 
-    private function cacheSet(string $key, $item): void
+    private function cacheSet(string $key, $item, int $expiration = 300): void
     {
         if ($this->memcached === null) {
             return;
         }
 
-        $this->memcached->set($key, $item);
+        $this->memcached->set($key, $item, $expiration);
     }
 }
