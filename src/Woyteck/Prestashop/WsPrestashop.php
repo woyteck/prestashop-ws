@@ -144,7 +144,7 @@ class WsPrestashop extends GuzzleBasedAbstract
     /** @var int */
     private $languageId;
 
-    private ?Memcached $memcached;
+    private ?Memcached $memcached = null;
 
     public function __construct(Client $client, ModelFactory $modelFactory, string $httpScheme, string $url, string $key)
     {
