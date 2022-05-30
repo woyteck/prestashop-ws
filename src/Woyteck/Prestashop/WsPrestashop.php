@@ -1440,17 +1440,17 @@ class WsPrestashop extends GuzzleBasedAbstract
         $cacheKey = 'blank_' . $resource;
         $item = $this->cacheGet($cacheKey);
         if ($item !== null) {
-            return $item;
+            return new SimpleXMLElement($item);
         }
 
         $url = $this->constructUrl($resource, null, null, ['schema' => 'blank']);
 
         $response = $this->send('get', $url);
 
-        $item = new SimpleXMLElement($response->getBody()->getContents());
+        $item = $response->getBody()->getContents();
         $this->cacheSet($cacheKey, $item);
 
-        return $item;
+        return new SimpleXMLElement($item);
     }
 
     private function post(string $resource, SimpleXMLElement $payload): array
