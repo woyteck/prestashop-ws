@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
+use Memcached;
 use SimpleXMLElement;
 use stdClass;
 use Woyteck\Db\ModelFactory;
@@ -143,6 +144,8 @@ class WsPrestashop extends GuzzleBasedAbstract
     /** @var int */
     private $languageId;
 
+    private ?Memcached $memcached;
+
     public function __construct(Client $client, ModelFactory $modelFactory, string $httpScheme, string $url, string $key)
     {
         parent::__construct($client, $modelFactory);
@@ -150,6 +153,11 @@ class WsPrestashop extends GuzzleBasedAbstract
         $this->httpScheme = $httpScheme;
         $this->url = $url;
         $this->key = $key;
+    }
+
+    public function setMemcached(Memcached $memcached): void
+    {
+        $this->memcached = $memcached;
     }
 
     public function setLanguageId(int $languageId): void
@@ -1429,11 +1437,20 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function getBlank(string $resource): SimpleXMLElement
     {
+        $cacheKey = 'blank_' . $resource;
+        $item = $this->cacheGet($cacheKey);
+        if ($item !== null) {
+            return $item;
+        }
+
         $url = $this->constructUrl($resource, null, null, ['schema' => 'blank']);
 
         $response = $this->send('get', $url);
 
-        return new SimpleXMLElement($response->getBody()->getContents());
+        $item = new SimpleXMLElement($response->getBody()->getContents());
+        $this->cacheSet($cacheKey, $item);
+
+        return $item;
     }
 
     private function post(string $resource, SimpleXMLElement $payload): array
@@ -1460,5 +1477,28 @@ class WsPrestashop extends GuzzleBasedAbstract
         ]);
 
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    private function cacheGet(string $key)
+    {
+        if ($this->memcached === null) {
+            return null;
+        }
+
+        $item = $this->memcached->get($key);
+        if ($item === false) {
+            return null;
+        }
+
+        return $item;
+    }
+
+    private function cacheSet(string $key, $item): void
+    {
+        if ($this->memcached === null) {
+            return;
+        }
+
+        $this->memcached->set($key, $item);
     }
 }
