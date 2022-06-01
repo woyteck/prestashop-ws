@@ -1309,8 +1309,6 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function getResourceByFieldValue(string $resourceName, string $fieldName, $fieldValue): ?ModelInterface
     {
-        $fieldName = urlencode($fieldName);
-        $fieldValue = urlencode($fieldValue);
         $url = $this->constructUrl($resourceName, null, null, ["filter[{$fieldName}]" => $fieldValue]);
         $array = $this->getJson($url);
         if (!isset($array[$resourceName][0]['id'])) {
