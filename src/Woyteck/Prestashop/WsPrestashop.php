@@ -1131,6 +1131,11 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->addResource(self::RESOURCE_PRODUCT_FEATURE_VALUES, $productFeatureValue);
     }
 
+    public function deleteProductFeatureValue(int $id): void
+    {
+        $this->deleteResource(self::RESOURCE_PRODUCT_FEATURE_VALUES, $id);
+    }
+
     /**
      * @param array|null $filters
      * @return array|ProductOption[]
