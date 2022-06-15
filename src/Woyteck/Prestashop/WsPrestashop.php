@@ -7,6 +7,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
 use Memcached;
 use SimpleXMLElement;
@@ -1463,15 +1464,22 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function post(string $resource, SimpleXMLElement $payload): array
     {
-        $response = $this->send('post', $this->constructUrl($resource), [
-            RequestOptions::HEADERS => [
-                'Io-Format' => 'JSON',
-                'Output-Format' => 'JSON',
-            ],
-            RequestOptions::BODY => $payload->asXML(),
-        ]);
+        try {
+            $response = $this->send('post', $this->constructUrl($resource), [
+                RequestOptions::HEADERS => [
+                    'Io-Format' => 'JSON',
+                    'Output-Format' => 'JSON',
+                ],
+                RequestOptions::BODY => $payload->asXML(),
+            ]);
 
-        return json_decode($response->getBody()->getContents(), true);
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->getContents() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->getContents(), $e->getCode(), $e);
+        }
     }
 
     private function put(string $resource, SimpleXMLElement $payload): array
