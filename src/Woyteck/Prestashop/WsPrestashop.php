@@ -1418,6 +1418,11 @@ class WsPrestashop extends GuzzleBasedAbstract
             }
 
             throw $e;
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
         }
     }
 
