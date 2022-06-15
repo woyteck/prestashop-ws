@@ -1378,7 +1378,14 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function deleteResource(string $resourceName, int $id): void
     {
-        $this->send('delete', $this->constructUrl($resourceName, $id));
+        try {
+            $this->send('delete', $this->constructUrl($resourceName, $id));
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+        }
     }
 
     private function constructUrl(string $resource, int $id = null, string $suffix = null, array $params = []): string
@@ -1444,7 +1451,14 @@ class WsPrestashop extends GuzzleBasedAbstract
      */
     private function getXml(string $url): SimpleXMLElement
     {
-        $response = $this->send('get', $url);
+        try {
+            $response = $this->send('get', $url);
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+        }
 
         return new SimpleXMLElement($response->getBody()->getContents());
     }
@@ -1459,7 +1473,14 @@ class WsPrestashop extends GuzzleBasedAbstract
 
         $url = $this->constructUrl($resource, null, null, ['schema' => 'blank']);
 
-        $response = $this->send('get', $url);
+        try {
+            $response = $this->send('get', $url);
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+        }
 
         $item = $response->getBody()->getContents();
         $this->cacheSet($cacheKey, $item, 3600);
@@ -1489,13 +1510,20 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     private function put(string $resource, SimpleXMLElement $payload): array
     {
-        $response = $this->send('put', $this->constructUrl($resource), [
-            RequestOptions::HEADERS => [
-                'Io-Format' => 'JSON',
-                'Output-Format' => 'JSON',
-            ],
-            RequestOptions::BODY => $payload->asXML(),
-        ]);
+        try {
+            $response = $this->send('put', $this->constructUrl($resource), [
+                RequestOptions::HEADERS => [
+                    'Io-Format' => 'JSON',
+                    'Output-Format' => 'JSON',
+                ],
+                RequestOptions::BODY => $payload->asXML(),
+            ]);
+        } catch (ServerException $e) {
+            throw new WsException(
+                'Guzzle exception.' . "\n\n" .
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+        }
 
         return json_decode($response->getBody()->getContents(), true);
     }
