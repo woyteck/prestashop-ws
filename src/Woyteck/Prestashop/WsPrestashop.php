@@ -1477,8 +1477,8 @@ class WsPrestashop extends GuzzleBasedAbstract
         } catch (ServerException $e) {
             throw new WsException(
                 'Guzzle exception.' . "\n\n" .
-                'Request:' . "\n" . $e->getRequest()->getBody()->getContents() . "\n\n" .
-                'Response:' . "\n" . $e->getResponse()->getBody()->getContents(), $e->getCode(), $e);
+                'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
         }
     }
 
