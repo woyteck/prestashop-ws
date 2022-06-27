@@ -550,7 +550,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @return int
      * @throws WsException
      */
-    public function addProductImage(int $productId, string $imagePath, string $alt = null)
+    public function addProductImage(int $productId, string $imagePath, string $alt = null): int
     {
         $url = $this->constructUrl(self::RESOURCE_PRODUCT_IMAGES, $productId);
         if (file_exists($imagePath) === false) {
@@ -578,11 +578,11 @@ class WsPrestashop extends GuzzleBasedAbstract
             $imageIdsAfter = $this->getProductImageIds($productId);
             $diff = array_diff($imageIdsAfter, $imageIdsBefore);
             $imageId = reset($diff);
-            if (!is_int($imageId)) {
+            if (!is_numeric($imageId)) {
                 throw new WsException('Failed to determine image id');
             }
 
-            return $imageId;
+            return (int) $imageId;
         } catch (BadResponseException $e) {
             $data = json_decode($e->getResponse()->getBody()->getContents(), true);
             if (!isset($data['errors'])) {
