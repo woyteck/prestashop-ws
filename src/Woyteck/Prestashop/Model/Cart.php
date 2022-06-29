@@ -444,6 +444,9 @@ class Cart implements ModelInterface
         if ($this->getDateUpd() !== null) {
             $xml->cart->date_upd = $this->getDateUpd()->format('Y-m-d H:i:s');
         }
+        if (isset($xml->cart->paczkomat_address)) {
+            unset($xml->cart->paczkomat_address);
+        }
 
         return $xml;
     }
