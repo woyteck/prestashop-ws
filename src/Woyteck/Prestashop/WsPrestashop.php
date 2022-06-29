@@ -1361,7 +1361,7 @@ class WsPrestashop extends GuzzleBasedAbstract
                 throw $e;
             }
 
-            throw new WsException($this->createErrorResponse($data));
+            throw new WsException($this->createErrorResponse($data) . "\n\n" . $xml->asXML());
         }
     }
 
