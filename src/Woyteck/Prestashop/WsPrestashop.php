@@ -640,6 +640,16 @@ class WsPrestashop extends GuzzleBasedAbstract
 
     /**
      * @param Order $order
+     * @return ModelInterface|Order
+     * @throws WsException
+     */
+    public function addOrder(Order $order): ModelInterface
+    {
+        return $this->addResource(self::RESOURCE_ORDERS, $order);
+    }
+
+    /**
+     * @param Order $order
      * @return ModelInterface|Order|null
      * @throws WsException
      */
