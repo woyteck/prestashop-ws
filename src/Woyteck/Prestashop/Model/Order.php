@@ -1021,8 +1021,8 @@ class Order implements ModelInterface
         if ($this->getTrackingNumber() !== null) {
             $xml->order->tracking_number = $this->getTrackingNumber();
         }
-        if (isset($xml->tracking_number)) {
-            unset($xml->tracking_number);
+        if (isset($xml->order->tracking_number)) {
+            unset($xml->order->tracking_number);
         }
 
         return $xml;
