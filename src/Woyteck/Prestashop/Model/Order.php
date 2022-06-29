@@ -1018,9 +1018,6 @@ class Order implements ModelInterface
         if ($this->getDeliveryPointPostCode() !== null) {
             $xml->order->bl_delivery_point_postcode = $this->getDeliveryPointPostCode();
         }
-        if ($this->getTargetPoint() !== null) {
-            $xml->order->target_point = $this->getTargetPoint();
-        }
         if ($this->getTrackingNumber() !== null) {
             $xml->order->tracking_number = $this->getTrackingNumber();
         }
