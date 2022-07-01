@@ -471,6 +471,15 @@ class Cart implements ModelInterface
                             if (isset($associationItem['id_customization'])) {
                                 $cartRow->addChild('id_customization', (string) $associationItem['id_customization']);
                             }
+                            if (isset($associationItem['product_price'])) {
+                                $cartRow->addChild('product_price', (string) $associationItem['product_price']);
+                            }
+                            if (isset($associationItem['unit_price_tax_incl'])) {
+                                $cartRow->addChild('unit_price_tax_incl', (string) $associationItem['unit_price_tax_incl']);
+                            }
+                            if (isset($associationItem['unit_price_tax_excl'])) {
+                                $cartRow->addChild('unit_price_tax_excl', (string) $associationItem['unit_price_tax_excl']);
+                            }
                             $cartRow->addChild('quantity', (string) $associationItem['quantity']);
 
                         }
