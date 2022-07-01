@@ -1431,7 +1431,7 @@ class WsPrestashop extends GuzzleBasedAbstract
             $json = json_decode($response->getBody()->getContents(), true);
             if (!is_array($json)) {
                 throw new WsException(
-                    'Invalid response:' . "\n\n" .
+                    'Unexpected response (status ' . $response->getStatusCode() . '):' . "\n\n" .
                     $response->getBody()->getContents()
                 );
             }
@@ -1522,7 +1522,7 @@ class WsPrestashop extends GuzzleBasedAbstract
             $json = json_decode($response->getBody()->getContents(), true);
             if (!is_array($json)) {
                 throw new WsException(
-                    'Invalid response:' . "\n\n" .
+                    'Unexpected response (status ' . $response->getStatusCode() . '):' . "\n\n" .
                     $response->getBody()->getContents()
                 );
             }
@@ -1557,7 +1557,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         $json = json_decode($response->getBody()->getContents(), true);
         if (!is_array($json)) {
             throw new WsException(
-                'Invalid response:' . "\n\n" .
+                'Unexpected response (status ' . $response->getStatusCode() . '):' . "\n\n" .
                 $response->getBody()->getContents()
             );
         }
