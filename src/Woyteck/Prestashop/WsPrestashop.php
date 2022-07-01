@@ -1428,7 +1428,15 @@ class WsPrestashop extends GuzzleBasedAbstract
                 ],
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $json = json_decode($response->getBody()->getContents(), true);
+            if (!is_array($json)) {
+                throw new WsException(
+                    'Invalid response:' . "\n\n" .
+                    $response->getBody()->getContents()
+                );
+            }
+
+            return $json;
         } catch (ClientException $e) {
             if ($e->getCode() === 404) {
                 return null;
@@ -1439,7 +1447,8 @@ class WsPrestashop extends GuzzleBasedAbstract
             throw new WsException(
                 'Guzzle exception.' . "\n\n" .
                 'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
-                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e
+            );
         }
     }
 
@@ -1467,7 +1476,8 @@ class WsPrestashop extends GuzzleBasedAbstract
             throw new WsException(
                 'Guzzle exception.' . "\n\n" .
                 'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
-                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e
+            );
         }
 
         return new SimpleXMLElement($response->getBody()->getContents());
@@ -1509,12 +1519,21 @@ class WsPrestashop extends GuzzleBasedAbstract
                 RequestOptions::BODY => $payload->asXML(),
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $json = json_decode($response->getBody()->getContents(), true);
+            if (!is_array($json)) {
+                throw new WsException(
+                    'Invalid response:' . "\n\n" .
+                    $response->getBody()->getContents()
+                );
+            }
+
+            return $json;
         } catch (ServerException $e) {
             throw new WsException(
                 'Guzzle exception.' . "\n\n" .
                 'Request:' . "\n" . $e->getRequest()->getBody()->__toString() . "\n\n" .
-                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
+                'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e
+            );
         }
     }
 
@@ -1535,7 +1554,15 @@ class WsPrestashop extends GuzzleBasedAbstract
                 'Response:' . "\n" . $e->getResponse()->getBody()->__toString(), $e->getCode(), $e);
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        $json = json_decode($response->getBody()->getContents(), true);
+        if (!is_array($json)) {
+            throw new WsException(
+                'Invalid response:' . "\n\n" .
+                $response->getBody()->getContents()
+            );
+        }
+
+        return $json;
     }
 
     private function cacheGet(string $key)
