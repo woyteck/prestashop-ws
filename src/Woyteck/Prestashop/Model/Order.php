@@ -7,6 +7,7 @@ use DateTime;
 use Exception;
 use SimpleXMLElement;
 use stdClass;
+use Woyteck\Prestashop\WsException;
 
 class Order implements ModelInterface
 {
@@ -1023,6 +1024,36 @@ class Order implements ModelInterface
         }
         if (isset($xml->order->target_point)) {
             unset($xml->order->target_point);
+        }
+        if ($this->getAssociations() !== null) {
+            unset($xml->order->associations->cart_rows);
+            foreach ($this->getAssociations() as $associationKey => $association) {
+                switch ($associationKey) {
+                    case 'cart_rows':
+                        $cartRows = $xml->product->associations->addChild('cart_rows');
+                        $cartRows->addAttribute('nodeType', 'cart_row');
+                        $cartRows->addAttribute('virtualEntity', 'true');
+                        foreach ($association as $associationItem) {
+                            $cartRow = $cartRows->addChild('cart_row');
+                            if (!isset($association['id_product'], $association['quantity'])) {
+                                throw new WsException('id_product & quantity required');
+                            }
+                            $cartRow->addChild('id_product', $association['id_product']);
+                            if (isset($association['id_product_attribute'])) {
+                                $cartRow->addChild('id_product_attribute', $association['id_product_attribute']);
+                            }
+                            if (isset($association['id_address_delivery'])) {
+                                $cartRow->addChild('id_address_delivery', $association['id_address_delivery']);
+                            }
+                            if (isset($association['id_customization'])) {
+                                $cartRow->addChild('id_customization', $association['id_customization']);
+                            }
+                            $cartRow->addChild('quantity', $association['quantity']);
+
+                        }
+                        break;
+                }
+            }
         }
 
         return $xml;
