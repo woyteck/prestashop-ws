@@ -1038,17 +1038,17 @@ class Order implements ModelInterface
                             if (!isset($associationItem['id_product'], $associationItem['quantity'])) {
                                 throw new WsException('id_product & quantity required');
                             }
-                            $cartRow->addChild('id_product', $associationItem['id_product']);
+                            $cartRow->addChild('id_product', (string) $associationItem['id_product']);
                             if (isset($associationItem['id_product_attribute'])) {
-                                $cartRow->addChild('id_product_attribute', $associationItem['id_product_attribute']);
+                                $cartRow->addChild('id_product_attribute', (string) $associationItem['id_product_attribute']);
                             }
                             if (isset($associationItem['id_address_delivery'])) {
-                                $cartRow->addChild('id_address_delivery', $associationItem['id_address_delivery']);
+                                $cartRow->addChild('id_address_delivery', (string) $associationItem['id_address_delivery']);
                             }
                             if (isset($associationItem['id_customization'])) {
-                                $cartRow->addChild('id_customization', $associationItem['id_customization']);
+                                $cartRow->addChild('id_customization', (string) $associationItem['id_customization']);
                             }
-                            $cartRow->addChild('quantity', $associationItem['quantity']);
+                            $cartRow->addChild('quantity', (string) $associationItem['quantity']);
 
                         }
                         break;
