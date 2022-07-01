@@ -7,6 +7,7 @@ use DateTime;
 use Exception;
 use SimpleXMLElement;
 use stdClass;
+use Woyteck\Prestashop\WsException;
 
 class Cart implements ModelInterface
 {
@@ -446,6 +447,36 @@ class Cart implements ModelInterface
         }
         if (isset($xml->cart->paczkomat_address)) {
             unset($xml->cart->paczkomat_address);
+        }
+        if ($this->getAssociations() !== null) {
+            unset($xml->cart->associations->cart_rows);
+            foreach ($this->getAssociations() as $associationKey => $association) {
+                switch ($associationKey) {
+                    case 'cart_rows':
+                        $cartRows = $xml->cart->associations->addChild('cart_rows');
+                        $cartRows->addAttribute('nodeType', 'cart_row');
+                        $cartRows->addAttribute('virtualEntity', 'true');
+                        foreach ($association as $associationItem) {
+                            $cartRow = $cartRows->addChild('cart_row');
+                            if (!isset($associationItem['id_product'], $associationItem['quantity'])) {
+                                throw new WsException('id_product & quantity required');
+                            }
+                            $cartRow->addChild('id_product', (string) $associationItem['id_product']);
+                            if (isset($associationItem['id_product_attribute'])) {
+                                $cartRow->addChild('id_product_attribute', (string) $associationItem['id_product_attribute']);
+                            }
+                            if (isset($associationItem['id_address_delivery'])) {
+                                $cartRow->addChild('id_address_delivery', (string) $associationItem['id_address_delivery']);
+                            }
+                            if (isset($associationItem['id_customization'])) {
+                                $cartRow->addChild('id_customization', (string) $associationItem['id_customization']);
+                            }
+                            $cartRow->addChild('quantity', (string) $associationItem['quantity']);
+
+                        }
+                        break;
+                }
+            }
         }
 
         return $xml;
