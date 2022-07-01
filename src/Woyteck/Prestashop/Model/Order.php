@@ -1030,7 +1030,7 @@ class Order implements ModelInterface
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
                     case 'cart_rows':
-                        $cartRows = $xml->product->associations->addChild('cart_rows');
+                        $cartRows = $xml->order->associations->addChild('cart_rows');
                         $cartRows->addAttribute('nodeType', 'cart_row');
                         $cartRows->addAttribute('virtualEntity', 'true');
                         foreach ($association as $associationItem) {
