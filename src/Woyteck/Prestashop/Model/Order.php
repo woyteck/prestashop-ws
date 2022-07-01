@@ -168,7 +168,7 @@ class Order implements ModelInterface
     private $trackingNumber;
 
     /** @var array */
-    private $associations;
+    private $associations = [];
 
     public function getId(): ?int
     {
