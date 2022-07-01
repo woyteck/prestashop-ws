@@ -1035,20 +1035,20 @@ class Order implements ModelInterface
                         $cartRows->addAttribute('virtualEntity', 'true');
                         foreach ($association as $associationItem) {
                             $cartRow = $cartRows->addChild('cart_row');
-                            if (!isset($association['id_product'], $association['quantity'])) {
+                            if (!isset($associationItem['id_product'], $associationItem['quantity'])) {
                                 throw new WsException('id_product & quantity required');
                             }
-                            $cartRow->addChild('id_product', $association['id_product']);
-                            if (isset($association['id_product_attribute'])) {
-                                $cartRow->addChild('id_product_attribute', $association['id_product_attribute']);
+                            $cartRow->addChild('id_product', $associationItem['id_product']);
+                            if (isset($associationItem['id_product_attribute'])) {
+                                $cartRow->addChild('id_product_attribute', $associationItem['id_product_attribute']);
                             }
-                            if (isset($association['id_address_delivery'])) {
-                                $cartRow->addChild('id_address_delivery', $association['id_address_delivery']);
+                            if (isset($associationItem['id_address_delivery'])) {
+                                $cartRow->addChild('id_address_delivery', $associationItem['id_address_delivery']);
                             }
-                            if (isset($association['id_customization'])) {
-                                $cartRow->addChild('id_customization', $association['id_customization']);
+                            if (isset($associationItem['id_customization'])) {
+                                $cartRow->addChild('id_customization', $associationItem['id_customization']);
                             }
-                            $cartRow->addChild('quantity', $association['quantity']);
+                            $cartRow->addChild('quantity', $associationItem['quantity']);
 
                         }
                         break;
