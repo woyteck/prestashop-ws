@@ -1552,6 +1552,11 @@ class Product implements ModelInterface
         }
         if ($this->getAssociations() !== null) {
             unset($xml->product->associations->categories);
+            unset($xml->product->associations->product_features);
+            unset($xml->product->associations->stock_availables);
+            unset($xml->product->associations->accessories);
+            unset($xml->product->associations->tags);
+
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
                     case 'categories':
