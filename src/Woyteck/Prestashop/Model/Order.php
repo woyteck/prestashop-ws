@@ -920,6 +920,12 @@ class Order implements ModelInterface
         if ($this->isIsValid() !== null) {
             $xml->order->valid = $this->isIsValid() ? '1' : '0';
         }
+        if ($this->getDateAdd() !== null) {
+            $xml->order->date_add = $this->getDateAdd()->format('Y-m-d H:i:s');
+        }
+        if ($this->getDateUpd() !== null) {
+            $xml->order->date_upd = $this->getDateUpd()->format('Y-m-d H:i:s');
+        }
         if ($this->getShippingNumber() !== null) {
             $xml->order->shipping_number = $this->getShippingNumber();
         }
