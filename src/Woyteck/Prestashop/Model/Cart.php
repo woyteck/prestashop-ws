@@ -446,6 +446,7 @@ class Cart implements ModelInterface
             unset($xml->cart->paczkomat_address);
         }
         if ($this->getAssociations() !== null) {
+            unset($xml->cart->paczkomat_code);
             unset($xml->cart->associations->cart_rows);
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
