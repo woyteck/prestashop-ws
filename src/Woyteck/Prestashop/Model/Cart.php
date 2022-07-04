@@ -403,9 +403,6 @@ class Cart implements ModelInterface
         if ($this->getIdLang() !== null) {
             $xml->cart->id_lang = $this->getIdLang();
         }
-        if ($this->getPaczkomatCode() !== null) {
-            $xml->cart->paczkomat_code = $this->getPaczkomatCode();
-        }
         if ($this->getPaczkomatAddress() !== null) {
             $xml->cart->paczkomat_address = $this->getPaczkomatAddress();
         }
