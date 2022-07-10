@@ -882,6 +882,9 @@ class Customer implements ModelInterface
             $xml->customer->reset_password_validity = $this->getResetPasswordValidity()->format('Y-m-d H:i:s');
         }
         if ($this->getAssociations() !== null) {
+            if (!isset($xml->customer->associations)) {
+                $xml->customer->addChild('associations');
+            }
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
                     case 'groups':
