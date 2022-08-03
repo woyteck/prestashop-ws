@@ -725,7 +725,7 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param string $email
      * @return ModelInterface|Customer|null
      */
-    public function getCustomerByEmail(string $email): ?Address
+    public function getCustomerByEmail(string $email): ?Customer
     {
         return $this->getResourceByFieldValue(self::RESOURCE_CUSTOMERS, 'email', $email);
     }
