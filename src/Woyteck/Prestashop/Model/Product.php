@@ -1311,6 +1311,8 @@ class Product implements ModelInterface
     {
         /** @var stdClass $xml */
 
+        unset($xml->product->position_in_category);
+
         if (isset($xml->combination->associations)) {
             unset($xml->product->associations);
             $xml->product->addChild('associations');
