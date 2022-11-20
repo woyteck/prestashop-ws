@@ -624,9 +624,9 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param array|null $filters
      * @return array|Order[]
      */
-    public function getOrders(array $filters = null): array
+    public function getOrders(array $filters = null, array $sorters = null, int $limit = null): array
     {
-        return $this->getResources(self::RESOURCE_ORDERS, $filters);
+        return $this->getResources(self::RESOURCE_ORDERS, $filters, null, null, $sorters, $limit);
     }
 
     /**
@@ -1289,7 +1289,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->updateResource(self::RESOURCE_TAGS, $tag);
     }
 
-    private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null): array
+    private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null, array $sorters = null, int $limit = null): array
     {
         $params = [];
         if ($filters !== null) {
@@ -1301,6 +1301,15 @@ class WsPrestashop extends GuzzleBasedAbstract
                 $params["filter[{$key}]"] = $valueString;
             }
         }
+        if ($sorters !== null) {
+            foreach ($sorters as $key => $value) {
+                $params["sort"] = "[{$key}_{$value}]";
+            }
+        }
+        if ($limit !== null) {
+            $params['limit'] = $limit;
+        }
+
         $url = $this->constructUrl($endpointOverride ?? $resourceName, null, null, $params);
 
         $response = $this->getJson($url);
