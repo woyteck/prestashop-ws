@@ -624,9 +624,9 @@ class WsPrestashop extends GuzzleBasedAbstract
      * @param array|null $filters
      * @return array|Order[]
      */
-    public function getOrders(array $filters = null, array $sorters = null, int $limit = null): array
+    public function getOrders(array $filters = null, array $sorters = null, int $limit = null, int $offset = null): array
     {
-        return $this->getResources(self::RESOURCE_ORDERS, $filters, null, null, $sorters, $limit);
+        return $this->getResources(self::RESOURCE_ORDERS, $filters, null, null, $sorters, $limit, $offset);
     }
 
     /**
@@ -1289,7 +1289,7 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->updateResource(self::RESOURCE_TAGS, $tag);
     }
 
-    private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null, array $sorters = null, int $limit = null): array
+    private function getResources(string $resourceName, array $filters = null, string $endpointOverride = null, string $singleResourceNameOverride = null, array $sorters = null, int $limit = null, $offset = null): array
     {
         $params = [];
         if ($filters !== null) {
@@ -1307,7 +1307,11 @@ class WsPrestashop extends GuzzleBasedAbstract
             }
         }
         if ($limit !== null) {
-            $params['limit'] = $limit;
+            if ($offset !== null) {
+                $params['limit'] = "{$offset},{$limit}";
+            } else {
+                $params['limit'] = $limit;
+            }
         }
 
         $url = $this->constructUrl($endpointOverride ?? $resourceName, null, null, $params);
