@@ -1264,6 +1264,10 @@ class WsPrestashop extends GuzzleBasedAbstract
         return $this->getResourceByFieldValue(self::RESOURCE_TAGS, 'name', $name);
     }
 
+    /**
+     * @param array|null $filters
+     * @return array|Tag[]
+     */
     public function getTags(array $filters = null): array
     {
         return $this->getResources(self::RESOURCE_TAGS, $filters);
