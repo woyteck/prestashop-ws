@@ -1315,7 +1315,7 @@ class Product implements ModelInterface
 
         if (isset($xml->combination->associations)) {
             unset($xml->product->associations);
-            $xml->product->addChild('associations');
+//            $xml->product->addChild('associations');
         }
 
         if ($this->getId() !== null) {
