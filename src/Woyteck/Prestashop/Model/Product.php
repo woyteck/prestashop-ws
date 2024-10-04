@@ -1574,6 +1574,7 @@ class Product implements ModelInterface
             unset($xml->product->associations->stock_availables);
             unset($xml->product->associations->accessories);
             unset($xml->product->associations->tags);
+            unset($xml->product->associations->product_bundle);
 
             foreach ($this->getAssociations() as $associationKey => $association) {
                 switch ($associationKey) {
